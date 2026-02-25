@@ -1,0 +1,143 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  avatar    String?
+  role      String   @default("member")
+  plan      String   @default("personal")
+  createdAt DateTime @default(now())
+
+  tasks          Task[]         @relation("assignee")
+  createdTasks   Task[]         @relation("creator")
+  comments       Comment[]
+  notifications  Notification[]
+  teamMembers    TeamMember[]
+  projectMembers ProjectMember[]
+}
+
+model Workspace {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  teams     Team[]
+}
+
+model Team {
+  id          String       @id @default(cuid())
+  name        String
+  workspaceId String
+  workspace   Workspace    @relation(fields: [workspaceId], references: [id])
+  createdAt   DateTime     @default(now())
+  projects    Project[]
+  members     TeamMember[]
+}
+
+model TeamMember {
+  userId String
+  teamId String
+  role   String @default("member")
+  user   User   @relation(fields: [userId], references: [id])
+  team   Team   @relation(fields: [teamId], references: [id])
+
+  @@id([userId, teamId])
+}
+
+model Project {
+  id          String          @id @default(cuid())
+  name        String
+  description String?
+  color       String          @default("#4573D2")
+  privacy     String          @default("public")
+  teamId      String
+  team        Team            @relation(fields: [teamId], references: [id])
+  createdAt   DateTime        @default(now())
+  sections    Section[]
+  tasks       Task[]
+  members     ProjectMember[]
+}
+
+model ProjectMember {
+  userId    String
+  projectId String
+  role      String  @default("member")
+  user      User    @relation(fields: [userId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@id([userId, projectId])
+}
+
+model Section {
+  id        String  @id @default(cuid())
+  name      String
+  position  Int
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  tasks     Task[]
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  status      String    @default("todo")
+  priority    String    @default("medium")
+  dueDate     DateTime?
+  position    Int       @default(0)
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  sectionId   String?
+  section     Section?  @relation(fields: [sectionId], references: [id])
+  projectId   String
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  assigneeId  String?
+  assignee    User?     @relation("assignee", fields: [assigneeId], references: [id])
+  creatorId   String
+  creator     User      @relation("creator", fields: [creatorId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  subtasks      Subtask[]
+  comments      Comment[]
+  notifications Notification[]
+}
+
+model Subtask {
+  id        String  @id @default(cuid())
+  title     String
+  completed Boolean @default(false)
+  position  Int     @default(0)
+  taskId    String
+  task      Task    @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  type      String
+  message   String
+  read      Boolean  @default(false)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  taskId    String?
+  task      Task?    @relation(fields: [taskId], references: [id])
+  createdAt DateTime @default(now())
+}

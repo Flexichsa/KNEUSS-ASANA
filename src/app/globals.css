@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-white text-asana-text-primary;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+}
+
+@layer components {
+  .asana-btn-primary {
+    @apply bg-asana-coral text-white px-4 py-2 rounded-md text-sm font-medium
+           hover:bg-asana-coral-hover transition-colors duration-150;
+  }
+
+  .asana-btn-secondary {
+    @apply bg-white text-asana-text-primary border border-asana-border px-4 py-2
+           rounded-md text-sm font-medium hover:bg-gray-50 transition-colors duration-150;
+  }
+
+  .asana-btn-ghost {
+    @apply text-asana-text-secondary px-3 py-1.5 rounded-md text-sm
+           hover:bg-gray-100 transition-colors duration-150;
+  }
+
+  .asana-input {
+    @apply w-full px-3 py-2 border border-asana-border rounded-md text-sm
+           focus:outline-none focus:ring-2 focus:ring-asana-link focus:border-transparent
+           placeholder:text-asana-text-secondary;
+  }
+
+  .asana-sidebar-item {
+    @apply flex items-center gap-3 px-4 py-1.5 text-sm text-asana-sidebar-text
+           hover:bg-asana-sidebar-hover rounded-md cursor-pointer transition-colors duration-150;
+  }
+
+  .asana-sidebar-item-active {
+    @apply bg-asana-sidebar-hover text-asana-sidebar-active;
+  }
+
+  .asana-card {
+    @apply bg-white border border-asana-border rounded-lg p-4;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #6D6E6F transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #6D6E6F;
+    border-radius: 3px;
+  }
+}
+
+/* Asana-style task checkbox */
+.task-checkbox {
+  @apply w-[18px] h-[18px] rounded-full border-2 border-gray-300
+         flex items-center justify-center cursor-pointer transition-all duration-150;
+}
+
+.task-checkbox:hover {
+  @apply border-asana-success;
+}
+
+.task-checkbox.completed {
+  @apply bg-asana-success border-asana-success;
+}
+
+/* Asana-style animations */
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideOutRight {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.2s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.15s ease-out;
+}
