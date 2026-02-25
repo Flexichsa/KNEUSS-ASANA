@@ -9,6 +9,7 @@ interface DatePickerProps {
   onChange: (date: Date | null) => void
   placeholder?: string
   className?: string
+  autoOpen?: boolean
 }
 
 // Monday-first German day abbreviations
@@ -52,8 +53,9 @@ export default function DatePicker({
   onChange,
   placeholder = 'Datum wählen...',
   className,
+  autoOpen = false,
 }: DatePickerProps) {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(autoOpen)
   const [viewDate, setViewDate] = useState(value || new Date())
   const containerRef = useRef<HTMLDivElement>(null)
   const today = new Date()
