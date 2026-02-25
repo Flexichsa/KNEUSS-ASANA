@@ -24,14 +24,13 @@ const PRIORITY_FLAG_COLORS: Record<string, string> = {
   urgent: '#E8384F',
 }
 
-const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
-  todo: { bg: 'bg-gray-100', text: 'text-gray-600' },
-  in_progress: { bg: 'bg-blue-100', text: 'text-blue-700' },
-  review: { bg: 'bg-yellow-100', text: 'text-yellow-700' },
-  done: { bg: 'bg-green-100', text: 'text-green-700' },
+const STATUS_COLORS: Record<string, { bg: string; text: string; label: string }> = {
+  todo: { bg: 'bg-gray-100', text: 'text-gray-600', label: 'Zu erledigen' },
+  in_progress: { bg: 'bg-blue-100', text: 'text-blue-700', label: 'In Bearbeitung' },
+  review: { bg: 'bg-yellow-100', text: 'text-yellow-700', label: 'Überprüfung' },
+  done: { bg: 'bg-green-100', text: 'text-green-700', label: 'Erledigt' },
 }
 
-// Inline dropdown component
 function InlineDropdown({
   isOpen,
   onClose,
@@ -60,11 +59,12 @@ function InlineDropdown({
     <div
       ref={ref}
       className={cn(
-        'absolute z-50 mt-1 bg-white border border-asana-border rounded-lg shadow-lg py-1 min-w-[160px] animate-fade-in',
+        'absolute z-[100] mt-1 bg-white border border-asana-border rounded-lg shadow-xl py-1 min-w-[180px]',
         align === 'right' && 'right-0',
         align === 'center' && 'left-1/2 -translate-x-1/2',
         align === 'left' && 'left-0'
       )}
+      style={{ top: '100%' }}
     >
       {children}
     </div>
@@ -118,9 +118,8 @@ export default function TaskRow({ task, onSelect, isSelected, onRefresh, showPro
   }
 
   const overdue = isDueDateOverdue(task.dueDate)
-  const priorityColor = PRIORITY_FLAG_COLORS[task.priority] || '#6D6E6F'
-  const statusOption = STATUS_OPTIONS.find(s => s.value === task.status)
-  const statusColor = STATUS_COLORS[task.status] || STATUS_COLORS.todo
+  const priorityColor = PRIORITY_FLAG_COLORS[task.priority] || PRIORITY_FLAG_COLORS.medium
+  const statusInfo = STATUS_COLORS[task.status] || STATUS_COLORS.todo
   const subtaskCount = task.subtasks?.length ?? (task as TaskType & { _count?: { subtasks?: number; comments?: number } })._count?.subtasks ?? 0
   const commentCount = task.comments?.length ?? (task as TaskType & { _count?: { subtasks?: number; comments?: number } })._count?.comments ?? 0
 
@@ -133,7 +132,7 @@ export default function TaskRow({ task, onSelect, isSelected, onRefresh, showPro
         task.completed && 'opacity-60'
       )}
     >
-      {/* Checkbox + Task Name */}
+      {/* ===== CHECKBOX + TASK NAME ===== */}
       <td className="py-1.5 pl-4 pr-2">
         <div className="flex items-center gap-2 min-w-0">
           <div className="flex-shrink-0" onClick={(e) => e.stopPropagation()}>
@@ -157,36 +156,38 @@ export default function TaskRow({ task, onSelect, isSelected, onRefresh, showPro
         </div>
       </td>
 
-      {/* ===== ZUSTÄNDIG (klickbar) ===== */}
-      <td className="w-[52px] py-1.5 px-1 text-center relative">
-        <div
-          onClick={(e) => {
-            e.stopPropagation()
-            closeAll()
-            fetchMembers()
-            setAssigneeOpen(true)
-          }}
-          className="flex items-center justify-center cursor-pointer"
-        >
-          {task.assignee ? (
+      {/* ===== ZUSTÄNDIG ===== */}
+      <td
+        className="w-[52px] py-1.5 px-1 text-center relative cursor-pointer"
+        onClick={(e) => {
+          e.stopPropagation()
+          closeAll()
+          fetchMembers()
+          setAssigneeOpen(true)
+        }}
+      >
+        {task.assignee ? (
+          <div className="flex items-center justify-center">
             <Avatar src={task.assignee.avatar} name={task.assignee.name} size="xs" />
-          ) : (
-            <div className="w-6 h-6 rounded-full border border-dashed border-gray-300 flex items-center justify-center hover:border-asana-link opacity-0 group-hover:opacity-100 transition-opacity">
+          </div>
+        ) : (
+          <div className="flex items-center justify-center">
+            <div className="w-6 h-6 rounded-full border border-dashed border-gray-300 flex items-center justify-center hover:border-asana-link hover:bg-gray-50 transition-colors">
               <UserPlus size={11} className="text-gray-400" />
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         <InlineDropdown isOpen={assigneeOpen} onClose={() => setAssigneeOpen(false)} align="center">
-          <div className="px-2 py-1.5 text-[11px] font-medium text-asana-text-secondary uppercase tracking-wider">
+          <div className="px-3 py-1.5 text-[11px] font-medium text-asana-text-secondary uppercase tracking-wider border-b border-asana-border">
             Zuständig
           </div>
           <button
-            className={cn('w-full flex items-center gap-2 px-3 py-1.5 text-[13px] text-left hover:bg-gray-50', !task.assigneeId && 'text-asana-link')}
+            className={cn('w-full flex items-center gap-2 px-3 py-2 text-[13px] text-left hover:bg-gray-50', !task.assigneeId && 'bg-blue-50 text-asana-link')}
             onClick={(e) => { e.stopPropagation(); updateTask({ assigneeId: null }); setAssigneeOpen(false) }}
           >
-            <div className="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
-              <UserPlus size={10} className="text-gray-500" />
+            <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+              <UserPlus size={11} className="text-gray-500" />
             </div>
             <span>Nicht zugewiesen</span>
             {!task.assigneeId && <Check size={14} className="ml-auto text-asana-link" />}
@@ -194,7 +195,7 @@ export default function TaskRow({ task, onSelect, isSelected, onRefresh, showPro
           {members.map(m => (
             <button
               key={m.id}
-              className={cn('w-full flex items-center gap-2 px-3 py-1.5 text-[13px] text-left hover:bg-gray-50', task.assigneeId === m.id && 'text-asana-link')}
+              className={cn('w-full flex items-center gap-2 px-3 py-2 text-[13px] text-left hover:bg-gray-50', task.assigneeId === m.id && 'bg-blue-50 text-asana-link')}
               onClick={(e) => { e.stopPropagation(); updateTask({ assigneeId: m.id }); setAssigneeOpen(false) }}
             >
               <Avatar src={m.avatar} name={m.name} size="xs" />
@@ -208,29 +209,28 @@ export default function TaskRow({ task, onSelect, isSelected, onRefresh, showPro
         </InlineDropdown>
       </td>
 
-      {/* ===== FÄLLIGKEITSDATUM (klickbar) ===== */}
-      <td className="w-[110px] py-1.5 px-3 relative">
-        <div
-          onClick={(e) => {
-            e.stopPropagation()
-            closeAll()
-            setDateOpen(true)
-          }}
-          className="cursor-pointer"
-        >
-          {task.dueDate ? (
-            <span className={cn('text-[12px]', overdue && !task.completed ? 'text-asana-danger font-medium' : 'text-asana-text-secondary')}>
-              {formatDueDate(task.dueDate)}
-            </span>
-          ) : (
-            <span className="flex items-center gap-1 text-[12px] text-asana-text-secondary opacity-0 group-hover:opacity-100 transition-opacity hover:text-asana-link">
-              <CalendarPlus size={12} />
-            </span>
-          )}
-        </div>
+      {/* ===== FÄLLIGKEITSDATUM ===== */}
+      <td
+        className="w-[110px] py-1.5 px-3 relative cursor-pointer"
+        onClick={(e) => {
+          e.stopPropagation()
+          closeAll()
+          setDateOpen(true)
+        }}
+      >
+        {task.dueDate ? (
+          <span className={cn('text-[12px]', overdue && !task.completed ? 'text-asana-danger font-medium' : 'text-asana-text-secondary')}>
+            {formatDueDate(task.dueDate)}
+          </span>
+        ) : (
+          <span className="flex items-center gap-1 text-[12px] text-gray-400 hover:text-asana-link transition-colors">
+            <CalendarPlus size={12} />
+            <span>Datum</span>
+          </span>
+        )}
 
         {dateOpen && (
-          <div className="absolute z-50 mt-1 left-0" onClick={(e) => e.stopPropagation()}>
+          <div className="absolute z-[100] mt-1 left-0" style={{ top: '100%' }} onClick={(e) => e.stopPropagation()}>
             <DatePicker
               value={task.dueDate ? new Date(task.dueDate) : null}
               onChange={(date) => {
@@ -244,47 +244,46 @@ export default function TaskRow({ task, onSelect, isSelected, onRefresh, showPro
         )}
       </td>
 
-      {/* ===== STATUS (klickbar) ===== */}
-      <td className="w-[120px] py-1.5 px-2 relative">
-        <div
-          onClick={(e) => {
-            e.stopPropagation()
-            closeAll()
-            setStatusOpen(true)
-          }}
-          className="cursor-pointer"
-        >
-          <span className={cn(
-            'inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium hover:ring-1 hover:ring-gray-300 transition-all',
-            statusColor.bg, statusColor.text
-          )}>
-            {statusOption?.label || task.status}
-          </span>
-        </div>
+      {/* ===== STATUS ===== */}
+      <td
+        className="w-[120px] py-1.5 px-2 relative cursor-pointer"
+        onClick={(e) => {
+          e.stopPropagation()
+          closeAll()
+          setStatusOpen(true)
+        }}
+      >
+        <span className={cn(
+          'inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium hover:ring-1 hover:ring-gray-300 transition-all',
+          statusInfo.bg, statusInfo.text
+        )}>
+          {statusInfo.label}
+        </span>
 
         <InlineDropdown isOpen={statusOpen} onClose={() => setStatusOpen(false)} align="left">
-          <div className="px-2 py-1.5 text-[11px] font-medium text-asana-text-secondary uppercase tracking-wider">
+          <div className="px-3 py-1.5 text-[11px] font-medium text-asana-text-secondary uppercase tracking-wider border-b border-asana-border">
             Status
           </div>
           {STATUS_OPTIONS.map(opt => {
             const color = STATUS_COLORS[opt.value] || STATUS_COLORS.todo
+            const isActive = task.status === opt.value
             return (
               <button
                 key={opt.value}
-                className="w-full flex items-center gap-2 px-3 py-1.5 text-[13px] text-left hover:bg-gray-50 transition-colors"
+                className={cn('w-full flex items-center gap-2 px-3 py-2 text-[13px] text-left hover:bg-gray-50 transition-colors', isActive && 'bg-blue-50')}
                 onClick={(e) => { e.stopPropagation(); updateTask({ status: opt.value }); setStatusOpen(false) }}
               >
                 <span className={cn('inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium', color.bg, color.text)}>
                   {opt.label}
                 </span>
-                {task.status === opt.value && <Check size={14} className="ml-auto text-asana-link" />}
+                {isActive && <Check size={14} className="ml-auto text-asana-link" />}
               </button>
             )
           })}
         </InlineDropdown>
       </td>
 
-      {/* Projekt (Liegt bei) */}
+      {/* ===== PROJEKT ===== */}
       {showProject && (
         <td className="w-[140px] py-1.5 px-3">
           {task.project ? (
@@ -292,20 +291,22 @@ export default function TaskRow({ task, onSelect, isSelected, onRefresh, showPro
               <span className="w-2 h-2 rounded-sm flex-shrink-0" style={{ backgroundColor: task.project.color || '#4573D2' }} />
               <span className="text-[12px] text-asana-text-secondary truncate">{task.project.name}</span>
             </div>
-          ) : null}
+          ) : (
+            <span className="text-[12px] text-gray-400">—</span>
+          )}
         </td>
       )}
 
-      {/* ===== PRIORITÄT (klickbar) ===== */}
-      <td className="w-[48px] py-1.5 px-2 text-center relative">
-        <div
-          onClick={(e) => {
-            e.stopPropagation()
-            closeAll()
-            setPrioOpen(true)
-          }}
-          className="flex items-center justify-center cursor-pointer hover:bg-gray-100 rounded p-0.5 transition-colors"
-        >
+      {/* ===== PRIORITÄT ===== */}
+      <td
+        className="w-[48px] py-1.5 px-2 text-center relative cursor-pointer"
+        onClick={(e) => {
+          e.stopPropagation()
+          closeAll()
+          setPrioOpen(true)
+        }}
+      >
+        <div className="flex items-center justify-center hover:bg-gray-100 rounded p-1 transition-colors">
           <Flag
             size={14}
             style={{ color: priorityColor }}
@@ -315,15 +316,16 @@ export default function TaskRow({ task, onSelect, isSelected, onRefresh, showPro
         </div>
 
         <InlineDropdown isOpen={prioOpen} onClose={() => setPrioOpen(false)} align="right">
-          <div className="px-2 py-1.5 text-[11px] font-medium text-asana-text-secondary uppercase tracking-wider">
+          <div className="px-3 py-1.5 text-[11px] font-medium text-asana-text-secondary uppercase tracking-wider border-b border-asana-border">
             Priorität
           </div>
           {PRIORITY_OPTIONS.map(opt => {
             const flagColor = PRIORITY_FLAG_COLORS[opt.value] || '#6D6E6F'
+            const isActive = task.priority === opt.value
             return (
               <button
                 key={opt.value}
-                className="w-full flex items-center gap-2 px-3 py-1.5 text-[13px] text-left hover:bg-gray-50 transition-colors"
+                className={cn('w-full flex items-center gap-2 px-3 py-2 text-[13px] text-left hover:bg-gray-50 transition-colors', isActive && 'bg-blue-50')}
                 onClick={(e) => { e.stopPropagation(); updateTask({ priority: opt.value }); setPrioOpen(false) }}
               >
                 <Flag
@@ -333,7 +335,7 @@ export default function TaskRow({ task, onSelect, isSelected, onRefresh, showPro
                   strokeWidth={opt.value === 'urgent' ? 0 : 2}
                 />
                 <span>{opt.label}</span>
-                {task.priority === opt.value && <Check size={14} className="ml-auto text-asana-link" />}
+                {isActive && <Check size={14} className="ml-auto text-asana-link" />}
               </button>
             )
           })}
