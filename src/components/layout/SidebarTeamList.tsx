@@ -57,7 +57,7 @@ export default function SidebarTeamList() {
   if (teams.length === 0) {
     return (
       <div className="px-4 py-2">
-        <p className="text-xs text-asana-sidebar-text">No teams yet</p>
+        <p className="text-xs text-asana-sidebar-text">Noch keine Teams</p>
       </div>
     )
   }
@@ -118,7 +118,7 @@ export default function SidebarTeamList() {
               (!team.projects || team.projects.length === 0) && (
                 <div className="ml-10 px-4 py-1.5">
                   <p className="text-xs text-asana-sidebar-text">
-                    No projects in this team
+                    Keine Projekte in diesem Team
                   </p>
                 </div>
               )}

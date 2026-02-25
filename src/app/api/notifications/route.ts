@@ -45,7 +45,7 @@ export async function PUT(request: Request) {
   }
 
   const notification = await prisma.notification.update({
-    where: { id },
+    where: { id, userId: session.user.id },
     data: { read: read ?? true },
   })
 

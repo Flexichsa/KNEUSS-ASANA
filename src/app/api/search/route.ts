@@ -36,9 +36,22 @@ export async function GET(request: Request) {
     }),
     prisma.user.findMany({
       where: {
-        OR: [
-          { name: { contains: query } },
-          { email: { contains: query } },
+        AND: [
+          {
+            OR: [
+              { name: { contains: query } },
+              { email: { contains: query } },
+            ],
+          },
+          {
+            teamMembers: {
+              some: {
+                team: {
+                  members: { some: { userId: session.user.id } },
+                },
+              },
+            },
+          },
         ],
       },
       select: { id: true, name: true, email: true, avatar: true },

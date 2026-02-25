@@ -159,6 +159,26 @@ export default function TaskListView({
   selectedTaskId,
   onRefresh,
 }: TaskListViewProps) {
+  const [addingSectionName, setAddingSectionName] = useState('')
+  const [isAddingSection, setIsAddingSection] = useState(false)
+
+  const handleAddSection = async () => {
+    const name = addingSectionName.trim()
+    if (!name) return
+    try {
+      await fetch('/api/sections', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, projectId }),
+      })
+      setAddingSectionName('')
+      setIsAddingSection(false)
+      onRefresh()
+    } catch (error) {
+      console.error('Failed to add section:', error)
+    }
+  }
+
   return (
     <div className="flex-1 overflow-auto">
       {sections.map((section) => (
@@ -172,7 +192,38 @@ export default function TaskListView({
         />
       ))}
 
-      {sections.length === 0 && (
+      {/* Add Section */}
+      <div className="border-b border-asana-border">
+        {isAddingSection ? (
+          <div className="flex items-center gap-2 py-2 px-4">
+            <input
+              type="text"
+              value={addingSectionName}
+              onChange={(e) => setAddingSectionName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleAddSection()
+                if (e.key === 'Escape') { setIsAddingSection(false); setAddingSectionName('') }
+              }}
+              onBlur={() => {
+                if (!addingSectionName.trim()) setIsAddingSection(false)
+              }}
+              placeholder="Abschnittname eingeben..."
+              className="flex-1 text-sm font-semibold bg-transparent outline-none placeholder:text-asana-text-secondary text-asana-text-primary"
+              autoFocus
+            />
+          </div>
+        ) : (
+          <button
+            onClick={() => setIsAddingSection(true)}
+            className="flex items-center gap-2 w-full py-2 px-4 text-sm text-asana-text-secondary hover:text-asana-text-primary hover:bg-asana-bg-secondary transition-colors"
+          >
+            <Plus size={14} />
+            <span>Abschnitt hinzufügen</span>
+          </button>
+        )}
+      </div>
+
+      {sections.length === 0 && !isAddingSection && (
         <div className="flex flex-col items-center justify-center py-20 text-asana-text-secondary">
           <p className="text-sm">Noch keine Abschnitte. Erstellen Sie einen Abschnitt, um loszulegen.</p>
         </div>

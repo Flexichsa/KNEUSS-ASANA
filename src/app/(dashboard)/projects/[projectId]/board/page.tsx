@@ -21,9 +21,9 @@ export default function BoardViewPage() {
       const res = await fetch(`/api/projects/${projectId}`)
       if (!res.ok) {
         if (res.status === 404) {
-          setError('Project not found')
+          setError('Projekt nicht gefunden')
         } else {
-          setError('Failed to load project')
+          setError('Projekt konnte nicht geladen werden')
         }
         return
       }
@@ -32,7 +32,7 @@ export default function BoardViewPage() {
       setError(null)
     } catch (err) {
       console.error('Failed to fetch project:', err)
-      setError('Failed to load project')
+      setError('Projekt konnte nicht geladen werden')
     } finally {
       setLoading(false)
     }
@@ -79,12 +79,12 @@ export default function BoardViewPage() {
     return (
       <div className="h-full flex items-center justify-center">
         <div className="text-center">
-          <p className="text-asana-text-secondary text-sm">{error || 'Project not found'}</p>
+          <p className="text-asana-text-secondary text-sm">{error || 'Projekt nicht gefunden'}</p>
           <button
             onClick={fetchProject}
             className="mt-2 text-sm text-asana-link hover:underline"
           >
-            Try again
+            Erneut versuchen
           </button>
         </div>
       </div>

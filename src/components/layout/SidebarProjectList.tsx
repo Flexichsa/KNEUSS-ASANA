@@ -43,7 +43,7 @@ export default function SidebarProjectList() {
   if (projects.length === 0) {
     return (
       <div className="px-4 py-2">
-        <p className="text-xs text-asana-sidebar-text">No projects yet</p>
+        <p className="text-xs text-asana-sidebar-text">Noch keine Projekte</p>
       </div>
     )
   }

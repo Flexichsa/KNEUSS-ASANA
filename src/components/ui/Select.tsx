@@ -24,7 +24,7 @@ export default function Select({
   value,
   onChange,
   options,
-  placeholder = 'Select...',
+  placeholder = 'Auswählen...',
   label,
   className,
   searchable,
@@ -118,7 +118,7 @@ export default function Select({
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search..."
+                  placeholder="Suchen..."
                   className="w-full h-8 pl-8 pr-3 text-sm bg-gray-50 border border-asana-border rounded focus:outline-none focus:border-asana-link"
                 />
               </div>
@@ -128,7 +128,7 @@ export default function Select({
           <div className="max-h-60 overflow-y-auto py-1">
             {filteredOptions.length === 0 ? (
               <div className="px-3 py-2 text-sm text-asana-text-secondary">
-                No options found
+                Keine Optionen gefunden
               </div>
             ) : (
               filteredOptions.map((option) => (

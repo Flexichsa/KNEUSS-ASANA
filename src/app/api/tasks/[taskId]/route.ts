@@ -28,7 +28,7 @@ export async function GET(
   })
 
   if (!task) {
-    return NextResponse.json({ error: 'Task not found' }, { status: 404 })
+    return NextResponse.json({ error: 'Aufgabe nicht gefunden' }, { status: 404 })
   }
 
   return NextResponse.json(task)
@@ -41,6 +41,15 @@ export async function PUT(
   const session = await getServerSession(authOptions)
   if (!session?.user?.id) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  // Verify task exists
+  const existing = await prisma.task.findUnique({
+    where: { id: params.taskId },
+    select: { id: true, projectId: true },
+  })
+  if (!existing) {
+    return NextResponse.json({ error: 'Aufgabe nicht gefunden' }, { status: 404 })
   }
 
   const body = await request.json()
@@ -59,6 +68,18 @@ export async function PUT(
     updateData.completed = completed
     updateData.completedAt = completed ? new Date() : null
     if (completed) updateData.status = 'done'
+  }
+
+  // Auto-add assignee as project member
+  if (assigneeId && assigneeId !== session.user.id) {
+    const isMember = await prisma.projectMember.findUnique({
+      where: { userId_projectId: { userId: assigneeId, projectId: existing.projectId } },
+    })
+    if (!isMember) {
+      await prisma.projectMember.create({
+        data: { userId: assigneeId, projectId: existing.projectId, role: 'member' },
+      }).catch(() => { /* ignore if already exists */ })
+    }
   }
 
   const task = await prisma.task.update({
@@ -87,6 +108,15 @@ export async function DELETE(
   const session = await getServerSession(authOptions)
   if (!session?.user?.id) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  // Verify task exists
+  const existing = await prisma.task.findUnique({
+    where: { id: params.taskId },
+    select: { id: true },
+  })
+  if (!existing) {
+    return NextResponse.json({ error: 'Aufgabe nicht gefunden' }, { status: 404 })
   }
 
   await prisma.task.delete({ where: { id: params.taskId } })

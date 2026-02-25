@@ -32,10 +32,20 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json()
-  const { name, workspaceId } = body
+  const { name } = body
+  let { workspaceId } = body
 
-  if (!name || !workspaceId) {
-    return NextResponse.json({ error: 'Name and workspace are required' }, { status: 400 })
+  if (!name) {
+    return NextResponse.json({ error: 'Team name is required' }, { status: 400 })
+  }
+
+  // Auto-detect workspace if not provided
+  if (!workspaceId) {
+    let workspace = await prisma.workspace.findFirst({ orderBy: { createdAt: 'asc' } })
+    if (!workspace) {
+      workspace = await prisma.workspace.create({ data: { name: 'Kneuss' } })
+    }
+    workspaceId = workspace.id
   }
 
   const team = await prisma.team.create({

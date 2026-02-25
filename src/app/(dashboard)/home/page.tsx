@@ -57,7 +57,7 @@ export default function HomePage() {
 
   if (loading) {
     return (
-      <div className="p-8">
+      <div className="p-6">
         <div className="animate-pulse space-y-6">
           <div className="h-8 bg-gray-200 rounded w-64" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -71,8 +71,8 @@ export default function HomePage() {
   return (
     <div className="h-full flex">
       {/* Main content */}
-      <div className="flex-1 overflow-y-auto p-8">
-        <div className="max-w-6xl mx-auto">
+      <div className="flex-1 overflow-y-auto p-6">
+        <div className="max-w-5xl">
           {/* Greeting */}
           <div className="mb-8">
             <h1 className="text-2xl font-medium text-asana-text-primary">

@@ -16,6 +16,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Name and projectId are required' }, { status: 400 })
   }
 
+  // Validate project exists
+  const project = await prisma.project.findUnique({ where: { id: projectId } })
+  if (!project) {
+    return NextResponse.json({ error: 'Projekt nicht gefunden' }, { status: 404 })
+  }
+
   const lastSection = await prisma.section.findFirst({
     where: { projectId },
     orderBy: { position: 'desc' },
@@ -46,6 +52,12 @@ export async function PUT(request: Request) {
     return NextResponse.json({ error: 'Section ID is required' }, { status: 400 })
   }
 
+  // Verify section exists
+  const existing = await prisma.section.findUnique({ where: { id } })
+  if (!existing) {
+    return NextResponse.json({ error: 'Abschnitt nicht gefunden' }, { status: 404 })
+  }
+
   const updateData: Record<string, unknown> = {}
   if (name !== undefined) updateData.name = name
   if (position !== undefined) updateData.position = position
@@ -69,6 +81,12 @@ export async function DELETE(request: Request) {
 
   if (!sectionId) {
     return NextResponse.json({ error: 'Section ID is required' }, { status: 400 })
+  }
+
+  // Verify section exists
+  const existing = await prisma.section.findUnique({ where: { id: sectionId } })
+  if (!existing) {
+    return NextResponse.json({ error: 'Abschnitt nicht gefunden' }, { status: 404 })
   }
 
   await prisma.section.delete({ where: { id: sectionId } })

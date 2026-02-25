@@ -35,7 +35,7 @@ export async function POST(request: Request) {
   const { name, description, color, privacy, teamId } = body
 
   if (!name || !teamId) {
-    return NextResponse.json({ error: 'Name and team are required' }, { status: 400 })
+    return NextResponse.json({ error: 'Name und Team sind erforderlich' }, { status: 400 })
   }
 
   const project = await prisma.project.create({
@@ -47,9 +47,9 @@ export async function POST(request: Request) {
       teamId,
       sections: {
         create: [
-          { name: 'To Do', position: 0 },
-          { name: 'In Progress', position: 1 },
-          { name: 'Done', position: 2 },
+          { name: 'Zu erledigen', position: 0 },
+          { name: 'In Bearbeitung', position: 1 },
+          { name: 'Erledigt', position: 2 },
         ],
       },
       members: {

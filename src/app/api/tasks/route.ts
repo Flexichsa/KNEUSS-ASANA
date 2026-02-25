@@ -45,7 +45,24 @@ export async function POST(request: Request) {
   const { title, description, status, priority, dueDate, sectionId, projectId, assigneeId } = body
 
   if (!title || !projectId) {
-    return NextResponse.json({ error: 'Title and project are required' }, { status: 400 })
+    return NextResponse.json({ error: 'Titel und Projekt sind erforderlich' }, { status: 400 })
+  }
+
+  // Validate project exists
+  const project = await prisma.project.findUnique({
+    where: { id: projectId },
+    include: { members: true },
+  })
+  if (!project) {
+    return NextResponse.json({ error: 'Projekt nicht gefunden' }, { status: 404 })
+  }
+
+  // Auto-add creator as project member if not yet a member
+  const isMember = project.members.some(m => m.userId === session.user.id)
+  if (!isMember) {
+    await prisma.projectMember.create({
+      data: { userId: session.user.id, projectId, role: 'member' },
+    })
   }
 
   // Get highest position in section
@@ -76,12 +93,20 @@ export async function POST(request: Request) {
     },
   })
 
-  // Create notification if assigned to someone else
+  // Auto-add assignee as project member
   if (assigneeId && assigneeId !== session.user.id) {
+    const assigneeIsMember = project.members.some(m => m.userId === assigneeId)
+    if (!assigneeIsMember) {
+      await prisma.projectMember.create({
+        data: { userId: assigneeId, projectId, role: 'member' },
+      }).catch(() => { /* ignore if already exists */ })
+    }
+
+    // Create notification
     await prisma.notification.create({
       data: {
         type: 'task_assigned',
-        message: `${session.user.name} assigned you to "${title}"`,
+        message: `${session.user.name} hat Ihnen die Aufgabe "${title}" zugewiesen`,
         userId: assigneeId,
         taskId: task.id,
       },
