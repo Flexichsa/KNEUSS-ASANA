@@ -54,11 +54,11 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Creat
 
     const trimmedName = name.trim()
     if (!trimmedName) {
-      setError('Project name is required')
+      setError('Projektname ist erforderlich')
       return
     }
     if (!teamId) {
-      setError('Please select a team')
+      setError('Bitte wählen Sie ein Team')
       return
     }
 
@@ -105,15 +105,15 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Creat
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="Create Project"
+      title="Projekt erstellen"
       size="md"
       footer={
         <>
           <Button variant="secondary" onClick={onClose}>
-            Cancel
+            Abbrechen
           </Button>
           <Button onClick={handleSubmit} loading={loading}>
-            Create Project
+            Projekt erstellen
           </Button>
         </>
       }
@@ -128,22 +128,22 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Creat
 
         {/* Project Name */}
         <Input
-          label="Project Name"
+          label="Projektname"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Enter project name..."
+          placeholder="Projektname eingeben..."
           autoFocus
         />
 
         {/* Description */}
         <div>
           <label className="block text-sm font-medium text-asana-text-primary mb-1.5">
-            Description
+            Beschreibung
           </label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="What is this project about?"
+            placeholder="Worum geht es in diesem Projekt?"
             rows={3}
             className={cn(
               'w-full px-3 py-2 text-sm bg-white border border-asana-border rounded-md resize-none',
@@ -160,13 +160,13 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Creat
           value={teamId}
           onChange={setTeamId}
           options={teamOptions}
-          placeholder="Select a team..."
+          placeholder="Team auswählen..."
         />
 
         {/* Color */}
         <div>
           <label className="block text-sm font-medium text-asana-text-primary mb-2">
-            Color
+            Farbe
           </label>
           <div className="flex items-center gap-2">
             {PROJECT_COLORS.map((c) => (
@@ -192,7 +192,7 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Creat
         {/* Privacy */}
         <div>
           <label className="block text-sm font-medium text-asana-text-primary mb-2">
-            Privacy
+            Sichtbarkeit
           </label>
           <div className="flex gap-3">
             <button
@@ -207,8 +207,8 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Creat
             >
               <Globe size={16} />
               <div className="text-left">
-                <div className="font-medium">Public</div>
-                <div className="text-xs opacity-75">Visible to team</div>
+                <div className="font-medium">Öffentlich</div>
+                <div className="text-xs opacity-75">Sichtbar für das Team</div>
               </div>
             </button>
             <button
@@ -223,8 +223,8 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Creat
             >
               <Lock size={16} />
               <div className="text-left">
-                <div className="font-medium">Private</div>
-                <div className="text-xs opacity-75">Members only</div>
+                <div className="font-medium">Privat</div>
+                <div className="text-xs opacity-75">Nur für Mitglieder</div>
               </div>
             </button>
           </div>

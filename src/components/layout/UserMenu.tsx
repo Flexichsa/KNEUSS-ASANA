@@ -81,7 +81,7 @@ export default function UserMenu() {
               className="flex items-center gap-3 px-4 py-2 text-sm text-asana-text-primary hover:bg-gray-50 transition-colors"
             >
               <Settings className="w-4 h-4 text-asana-text-secondary" />
-              My Settings
+              Einstellungen
             </Link>
             <Link
               href="/pricing"
@@ -101,7 +101,7 @@ export default function UserMenu() {
               className="flex items-center gap-3 px-4 py-2 text-sm text-asana-text-primary hover:bg-gray-50 transition-colors w-full text-left"
             >
               <LogOut className="w-4 h-4 text-asana-text-secondary" />
-              Log Out
+              Abmelden
             </button>
           </div>
         </div>

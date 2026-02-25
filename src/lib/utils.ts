@@ -19,13 +19,13 @@ export function formatDate(date: Date | string): string {
   const diff = now.getTime() - d.getTime()
   const days = Math.floor(diff / (1000 * 60 * 60 * 24))
 
-  if (days === 0) return 'Today'
-  if (days === 1) return 'Yesterday'
-  if (days < 7) return `${days} days ago`
+  if (days === 0) return 'Heute'
+  if (days === 1) return 'Gestern'
+  if (days < 7) return `Vor ${days} Tagen`
 
-  return d.toLocaleDateString('en-US', {
-    month: 'short',
+  return d.toLocaleDateString('de-DE', {
     day: 'numeric',
+    month: 'short',
     year: d.getFullYear() !== now.getFullYear() ? 'numeric' : undefined,
   })
 }
@@ -39,10 +39,10 @@ export function formatDueDate(date: Date | string | null): string {
   target.setHours(0, 0, 0, 0)
   const diff = Math.floor((target.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
 
-  if (diff < 0) return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-  if (diff === 0) return 'Today'
-  if (diff === 1) return 'Tomorrow'
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  if (diff < 0) return d.toLocaleDateString('de-DE', { day: 'numeric', month: 'short' })
+  if (diff === 0) return 'Heute'
+  if (diff === 1) return 'Morgen'
+  return d.toLocaleDateString('de-DE', { day: 'numeric', month: 'short' })
 }
 
 export function isDueDateOverdue(date: Date | string | null): boolean {
@@ -64,15 +64,15 @@ export const PROJECT_COLORS = [
 ]
 
 export const PRIORITY_OPTIONS = [
-  { label: 'Low', value: 'low', color: '#6D6E6F' },
-  { label: 'Medium', value: 'medium', color: '#4573D2' },
-  { label: 'High', value: 'high', color: '#FD9A00' },
-  { label: 'Urgent', value: 'urgent', color: '#E8384F' },
+  { label: 'Niedrig', value: 'low', color: '#6D6E6F' },
+  { label: 'Mittel', value: 'medium', color: '#4573D2' },
+  { label: 'Hoch', value: 'high', color: '#FD9A00' },
+  { label: 'Dringend', value: 'urgent', color: '#E8384F' },
 ]
 
 export const STATUS_OPTIONS = [
-  { label: 'To Do', value: 'todo' },
-  { label: 'In Progress', value: 'in_progress' },
-  { label: 'Review', value: 'review' },
-  { label: 'Done', value: 'done' },
+  { label: 'Zu erledigen', value: 'todo' },
+  { label: 'In Bearbeitung', value: 'in_progress' },
+  { label: 'Überprüfung', value: 'review' },
+  { label: 'Erledigt', value: 'done' },
 ]

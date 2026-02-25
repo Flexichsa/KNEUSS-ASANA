@@ -50,17 +50,17 @@ export default function ProjectHeader({ project, activeView }: ProjectHeaderProp
 
   const menuItems = [
     {
-      label: 'Project Settings',
+      label: 'Projekteinstellungen',
       onClick: () => {},
       icon: <Settings size={14} />,
     },
     {
-      label: 'Add Members',
+      label: 'Mitglieder hinzufügen',
       onClick: () => {},
       icon: <UserPlus size={14} />,
     },
     {
-      label: 'Delete Project',
+      label: 'Projekt löschen',
       onClick: () => {},
       icon: <Trash2 size={14} />,
       destructive: true,

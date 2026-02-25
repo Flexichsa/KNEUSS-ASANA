@@ -75,7 +75,7 @@ export default function SubtaskList({ taskId, subtasks, onRefresh }: SubtaskList
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-2">
-        <h4 className="text-sm font-medium text-asana-text-primary">Subtasks</h4>
+        <h4 className="text-sm font-medium text-asana-text-primary">Unteraufgaben</h4>
         {subtasks.length > 0 && (
           <span className="text-xs text-asana-text-secondary">
             {completedCount}/{subtasks.length}
@@ -139,7 +139,7 @@ export default function SubtaskList({ taskId, subtasks, onRefresh }: SubtaskList
                 setIsAdding(false)
               }
             }}
-            placeholder="Add subtask..."
+            placeholder="Unteraufgabe hinzufügen..."
             className="flex-1 text-sm bg-transparent outline-none placeholder:text-asana-text-secondary text-asana-text-primary"
             autoFocus
           />
@@ -150,7 +150,7 @@ export default function SubtaskList({ taskId, subtasks, onRefresh }: SubtaskList
           className="flex items-center gap-1.5 mt-1 py-1.5 text-sm text-asana-text-secondary hover:text-asana-text-primary transition-colors"
         >
           <Plus size={14} />
-          <span>Add subtask</span>
+          <span>Unteraufgabe hinzufügen</span>
         </button>
       )}
     </div>

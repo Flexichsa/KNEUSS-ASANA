@@ -9,12 +9,12 @@ export default function TimelineViewPage() {
         <div className="w-16 h-16 rounded-full bg-asana-bg-secondary flex items-center justify-center mx-auto mb-4">
           <GanttChart size={28} className="text-asana-text-secondary" />
         </div>
-        <h2 className="text-lg font-medium text-asana-text-primary mb-2">Timeline View</h2>
+        <h2 className="text-lg font-medium text-asana-text-primary mb-2">Zeitachse</h2>
         <p className="text-sm text-asana-text-secondary max-w-md mx-auto">
-          See how the pieces of your plan fit together. Assign start and due dates to tasks, set dependencies, and track progress.
+          Sehen Sie, wie die Teile Ihres Plans zusammenpassen. Weisen Sie Start- und Fälligkeitsdaten zu, setzen Sie Abhängigkeiten und verfolgen Sie den Fortschritt.
         </p>
         <p className="text-xs text-asana-text-secondary mt-4">
-          Timeline (Gantt) view is available on Starter plans and above.
+          Die Zeitachsen-Ansicht (Gantt) ist ab dem Starter-Plan verfügbar.
         </p>
       </div>
     </div>

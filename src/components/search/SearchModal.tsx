@@ -110,7 +110,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
             value={query}
             onChange={(e) => { setQuery(e.target.value); setSelectedIndex(0) }}
             onKeyDown={handleKeyDown}
-            placeholder="Search tasks, projects, and people..."
+            placeholder="Aufgaben, Projekte und Personen suchen..."
             className="flex-1 text-sm outline-none bg-transparent placeholder:text-asana-text-secondary"
           />
           <kbd className="hidden sm:inline text-[10px] text-asana-text-secondary bg-asana-bg-secondary px-1.5 py-0.5 rounded border border-asana-border">
@@ -121,19 +121,19 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
         {/* Results */}
         <div className="max-h-[400px] overflow-y-auto scrollbar-thin">
           {loading && (
-            <div className="p-4 text-center text-sm text-asana-text-secondary">Searching...</div>
+            <div className="p-4 text-center text-sm text-asana-text-secondary">Suche läuft...</div>
           )}
 
           {!loading && query.length >= 2 && allItems.length === 0 && (
             <div className="p-8 text-center text-sm text-asana-text-secondary">
-              No results found for &quot;{query}&quot;
+              Keine Ergebnisse für &quot;{query}&quot;
             </div>
           )}
 
           {!loading && results.tasks.length > 0 && (
             <div className="p-2">
               <div className="px-3 py-1.5 text-xxs uppercase tracking-wider text-asana-text-secondary font-medium">
-                Tasks
+                Aufgaben
               </div>
               {results.tasks.map((task, i) => (
                 <button
@@ -159,7 +159,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           {!loading && results.projects.length > 0 && (
             <div className="p-2">
               <div className="px-3 py-1.5 text-xxs uppercase tracking-wider text-asana-text-secondary font-medium">
-                Projects
+                Projekte
               </div>
               {results.projects.map((project, i) => (
                 <button
@@ -187,7 +187,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           {!loading && results.users.length > 0 && (
             <div className="p-2">
               <div className="px-3 py-1.5 text-xxs uppercase tracking-wider text-asana-text-secondary font-medium">
-                People
+                Personen
               </div>
               {results.users.map((user) => (
                 <div
@@ -204,7 +204,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
           {!loading && query.length < 2 && (
             <div className="p-6 text-center text-sm text-asana-text-secondary">
-              Type at least 2 characters to search
+              Mindestens 2 Zeichen eingeben
             </div>
           )}
         </div>

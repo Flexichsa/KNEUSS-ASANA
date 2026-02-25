@@ -69,10 +69,10 @@ export default function InboxPage() {
     <div className="p-6 max-w-3xl">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-xl font-medium text-asana-text-primary">Inbox</h1>
+          <h1 className="text-xl font-medium text-asana-text-primary">Posteingang</h1>
           {unreadCount > 0 && (
             <p className="text-sm text-asana-text-secondary mt-0.5">
-              {unreadCount} unread notification{unreadCount !== 1 ? 's' : ''}
+              {unreadCount} ungelesene {unreadCount !== 1 ? 'Benachrichtigungen' : 'Benachrichtigung'}
             </p>
           )}
         </div>
@@ -82,7 +82,7 @@ export default function InboxPage() {
             className="flex items-center gap-1.5 text-sm text-asana-link hover:text-asana-coral-hover"
           >
             <CheckCheck size={14} />
-            Mark all as read
+            Alle als gelesen markieren
           </button>
         )}
       </div>
@@ -92,9 +92,9 @@ export default function InboxPage() {
           <div className="w-16 h-16 rounded-full bg-asana-bg-secondary flex items-center justify-center mx-auto mb-4">
             <Archive size={28} className="text-asana-text-secondary" />
           </div>
-          <p className="text-asana-text-secondary font-medium">You&apos;re all caught up!</p>
+          <p className="text-asana-text-secondary font-medium">Alles gelesen!</p>
           <p className="text-sm text-asana-text-secondary mt-1">
-            Notifications about your tasks will appear here.
+            Benachrichtigungen zu Ihren Aufgaben erscheinen hier.
           </p>
         </div>
       ) : (

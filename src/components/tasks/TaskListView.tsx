@@ -89,16 +89,16 @@ function SectionGroup({
             <tr className="border-b border-asana-border">
               <th className="w-10" />
               <th className="text-left py-1.5 px-3 text-xs font-medium text-asana-text-secondary uppercase tracking-wider">
-                Task Name
+                Aufgabenname
               </th>
               <th className="w-[140px] text-left py-1.5 px-3 text-xs font-medium text-asana-text-secondary uppercase tracking-wider">
-                Assignee
+                Zuständig
               </th>
               <th className="w-[120px] text-left py-1.5 px-3 text-xs font-medium text-asana-text-secondary uppercase tracking-wider">
-                Due Date
+                Fällig am
               </th>
               <th className="w-[100px] text-left py-1.5 px-3 text-xs font-medium text-asana-text-secondary uppercase tracking-wider">
-                Priority
+                Priorität
               </th>
             </tr>
           </thead>
@@ -132,7 +132,7 @@ function SectionGroup({
                     setIsAdding(false)
                   }
                 }}
-                placeholder="Write a task name..."
+                placeholder="Aufgabenname eingeben..."
                 className="flex-1 text-sm bg-transparent outline-none placeholder:text-asana-text-secondary text-asana-text-primary"
                 autoFocus
               />
@@ -143,7 +143,7 @@ function SectionGroup({
               className="flex items-center gap-2 w-full py-2 px-4 text-sm text-asana-text-secondary hover:text-asana-text-primary hover:bg-asana-bg-secondary transition-colors"
             >
               <Plus size={14} />
-              <span>Add task...</span>
+              <span>Aufgabe hinzufügen...</span>
             </button>
           )}
         </div>
@@ -174,7 +174,7 @@ export default function TaskListView({
 
       {sections.length === 0 && (
         <div className="flex flex-col items-center justify-center py-20 text-asana-text-secondary">
-          <p className="text-sm">No sections yet. Create a section to get started.</p>
+          <p className="text-sm">Noch keine Abschnitte. Erstellen Sie einen Abschnitt, um loszulegen.</p>
         </div>
       )}
     </div>

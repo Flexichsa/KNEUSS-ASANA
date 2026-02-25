@@ -47,7 +47,7 @@ export default function CommentSection({ taskId, comments, onRefresh }: CommentS
 
   return (
     <div>
-      <h4 className="text-sm font-medium text-asana-text-primary mb-3">Comments</h4>
+      <h4 className="text-sm font-medium text-asana-text-primary mb-3">Kommentare</h4>
 
       {/* Comment Input */}
       <div className="flex gap-3 mb-4">
@@ -56,7 +56,7 @@ export default function CommentSection({ taskId, comments, onRefresh }: CommentS
             value={content}
             onChange={(e) => setContent(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Write a comment..."
+            placeholder="Kommentar schreiben..."
             rows={2}
             className={cn(
               'w-full px-3 py-2 text-sm bg-white border border-asana-border rounded-lg resize-none',
@@ -73,7 +73,7 @@ export default function CommentSection({ taskId, comments, onRefresh }: CommentS
               loading={isSubmitting}
             >
               <Send size={12} />
-              Comment
+              Senden
             </Button>
           </div>
         </div>
@@ -106,7 +106,7 @@ export default function CommentSection({ taskId, comments, onRefresh }: CommentS
 
         {comments.length === 0 && (
           <p className="text-sm text-asana-text-secondary text-center py-4">
-            No comments yet. Be the first to comment.
+            Noch keine Kommentare. Schreiben Sie den ersten Kommentar.
           </p>
         )}
       </div>

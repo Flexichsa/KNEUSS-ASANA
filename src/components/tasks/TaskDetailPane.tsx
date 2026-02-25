@@ -115,7 +115,7 @@ export default function TaskDetailPane({ taskId, onClose, onRefresh }: TaskDetai
   if (!task) {
     return (
       <div className="w-[500px] border-l border-asana-border bg-white h-full flex items-center justify-center flex-shrink-0">
-        <p className="text-sm text-asana-text-secondary">Task not found</p>
+        <p className="text-sm text-asana-text-secondary">Aufgabe nicht gefunden</p>
       </div>
     )
   }
@@ -145,7 +145,7 @@ export default function TaskDetailPane({ taskId, onClose, onRefresh }: TaskDetai
           onClick={handleComplete}
         >
           <Check size={14} />
-          {task.completed ? 'Completed' : 'Mark Complete'}
+          {task.completed ? 'Erledigt' : 'Als erledigt markieren'}
         </Button>
         <button
           onClick={onClose}
@@ -169,7 +169,7 @@ export default function TaskDetailPane({ taskId, onClose, onRefresh }: TaskDetai
               'focus:ring-0 placeholder:text-asana-text-secondary',
               task.completed && 'line-through text-asana-text-secondary'
             )}
-            placeholder="Task name"
+            placeholder="Aufgabenname"
           />
 
           {/* Fields */}
@@ -177,7 +177,7 @@ export default function TaskDetailPane({ taskId, onClose, onRefresh }: TaskDetai
             {/* Assignee */}
             <div className="flex items-center gap-4">
               <label className="w-24 text-sm text-asana-text-secondary flex-shrink-0">
-                Assignee
+                Zuständig
               </label>
               <div className="flex-1 flex items-center gap-2">
                 {task.assignee && (
@@ -191,10 +191,10 @@ export default function TaskDetailPane({ taskId, onClose, onRefresh }: TaskDetai
                   value={task.assigneeId || ''}
                   onChange={(value) => updateTask({ assigneeId: value || null } as Partial<TaskType>)}
                   options={[
-                    { label: 'Unassigned', value: '' },
+                    { label: 'Nicht zugewiesen', value: '' },
                     ...memberOptions,
                   ]}
-                  placeholder="Assign to..."
+                  placeholder="Zuweisen an..."
                   className="flex-1"
                 />
               </div>
@@ -203,14 +203,14 @@ export default function TaskDetailPane({ taskId, onClose, onRefresh }: TaskDetai
             {/* Due Date */}
             <div className="flex items-center gap-4">
               <label className="w-24 text-sm text-asana-text-secondary flex-shrink-0">
-                Due Date
+                Fällig am
               </label>
               <DatePicker
                 value={task.dueDate ? new Date(task.dueDate) : null}
                 onChange={(date) =>
                   updateTask({ dueDate: date ? date.toISOString() : null } as Partial<TaskType>)
                 }
-                placeholder="No due date"
+                placeholder="Kein Fälligkeitsdatum"
                 className="flex-1"
               />
             </div>
@@ -218,7 +218,7 @@ export default function TaskDetailPane({ taskId, onClose, onRefresh }: TaskDetai
             {/* Priority */}
             <div className="flex items-center gap-4">
               <label className="w-24 text-sm text-asana-text-secondary flex-shrink-0">
-                Priority
+                Priorität
               </label>
               <Select
                 value={task.priority}
@@ -245,7 +245,7 @@ export default function TaskDetailPane({ taskId, onClose, onRefresh }: TaskDetai
             {task.project && (
               <div className="flex items-center gap-4">
                 <label className="w-24 text-sm text-asana-text-secondary flex-shrink-0">
-                  Project
+                  Projekt
                 </label>
                 <a
                   href={`/projects/${task.projectId}/list`}
@@ -267,12 +267,12 @@ export default function TaskDetailPane({ taskId, onClose, onRefresh }: TaskDetai
 
           {/* Description */}
           <div className="mb-6">
-            <h4 className="text-sm font-medium text-asana-text-primary mb-2">Description</h4>
+            <h4 className="text-sm font-medium text-asana-text-primary mb-2">Beschreibung</h4>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               onBlur={handleDescriptionBlur}
-              placeholder="Add a description..."
+              placeholder="Beschreibung hinzufügen..."
               rows={3}
               className={cn(
                 'w-full px-3 py-2 text-sm bg-white border border-transparent rounded-lg resize-none',

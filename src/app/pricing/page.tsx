@@ -8,94 +8,94 @@ const plans = [
   {
     name: 'Personal',
     price: { monthly: 0, annual: 0 },
-    description: 'For individuals getting started with project management',
-    cta: 'Current Plan',
+    description: 'Für Einzelpersonen, die mit Projektmanagement beginnen',
+    cta: 'Aktueller Plan',
     ctaStyle: 'asana-btn-secondary',
     highlighted: false,
     features: [
-      'Unlimited tasks',
-      'Up to 10 team members',
-      'List view',
-      'Board view',
-      'Calendar view',
-      'Basic search',
-      'Mobile app',
+      'Unbegrenzte Aufgaben',
+      'Bis zu 10 Teammitglieder',
+      'Listenansicht',
+      'Board-Ansicht',
+      'Kalenderansicht',
+      'Einfache Suche',
+      'Mobile App',
     ],
   },
   {
     name: 'Starter',
     price: { monthly: 10.99, annual: 8.99 },
-    description: 'For small teams that need to manage work and scale collaboration',
+    description: 'Für kleine Teams, die Arbeit verwalten und Zusammenarbeit skalieren müssen',
     cta: 'Upgrade',
     ctaStyle: 'asana-btn-primary',
     highlighted: true,
     features: [
-      'Everything in Personal, plus:',
-      'Timeline view',
+      'Alles aus Personal, plus:',
+      'Zeitachsenansicht',
       'Dashboards',
-      'Advanced search & reporting',
-      'Unlimited team members',
-      'Custom fields',
-      'Task dependencies',
-      'Start dates',
+      'Erweiterte Suche & Berichte',
+      'Unbegrenzte Teammitglieder',
+      'Benutzerdefinierte Felder',
+      'Aufgabenabhängigkeiten',
+      'Startdaten',
     ],
   },
   {
     name: 'Advanced',
     price: { monthly: 24.99, annual: 19.99 },
-    description: 'For teams that need to manage a portfolio of work and report on progress',
+    description: 'Für Teams, die ein Arbeitsportfolio verwalten und über Fortschritte berichten müssen',
     cta: 'Upgrade',
     ctaStyle: 'asana-btn-primary',
     highlighted: false,
     features: [
-      'Everything in Starter, plus:',
+      'Alles aus Starter, plus:',
       'Portfolios',
-      'Goals',
-      'Custom rules builder',
-      'Approvals',
-      'Proofing',
-      'Forms branching & customization',
-      'Advanced integrations',
+      'Ziele',
+      'Benutzerdefinierter Regelersteller',
+      'Genehmigungen',
+      'Korrekturlesen',
+      'Formularverzweigung & -anpassung',
+      'Erweiterte Integrationen',
     ],
   },
   {
     name: 'Enterprise',
     price: { monthly: null, annual: null },
-    description: 'For organizations that need additional security, support, and control',
-    cta: 'Contact Sales',
+    description: 'Für Organisationen, die zusätzliche Sicherheit, Support und Kontrolle benötigen',
+    cta: 'Vertrieb kontaktieren',
     ctaStyle: 'asana-btn-secondary',
     highlighted: false,
     features: [
-      'Everything in Advanced, plus:',
+      'Alles aus Advanced, plus:',
       'SAML & SSO',
-      'Data export',
-      'Custom branding',
-      'Priority support',
-      'Advanced admin controls',
-      'Service accounts',
-      'Audit log API',
+      'Datenexport',
+      'Eigenes Branding',
+      'Prioritäts-Support',
+      'Erweiterte Admin-Steuerung',
+      'Dienstkonten',
+      'Audit-Log-API',
     ],
   },
 ]
 
 const comparisonFeatures = [
-  { name: 'Unlimited tasks', personal: true, starter: true, advanced: true, enterprise: true },
-  { name: 'Team members', personal: 'Up to 10', starter: 'Unlimited', advanced: 'Unlimited', enterprise: 'Unlimited' },
-  { name: 'List view', personal: true, starter: true, advanced: true, enterprise: true },
-  { name: 'Board view', personal: true, starter: true, advanced: true, enterprise: true },
-  { name: 'Calendar view', personal: true, starter: true, advanced: true, enterprise: true },
-  { name: 'Timeline view', personal: false, starter: true, advanced: true, enterprise: true },
+  { name: 'Unbegrenzte Aufgaben', personal: true, starter: true, advanced: true, enterprise: true },
+  { name: 'Teammitglieder', personal: 'Bis zu 10', starter: 'Unbegrenzt', advanced: 'Unbegrenzt', enterprise: 'Unbegrenzt' },
+  { name: 'Listenansicht', personal: true, starter: true, advanced: true, enterprise: true },
+  { name: 'Board-Ansicht', personal: true, starter: true, advanced: true, enterprise: true },
+  { name: 'Kalenderansicht', personal: true, starter: true, advanced: true, enterprise: true },
+  { name: 'Zeitachsenansicht', personal: false, starter: true, advanced: true, enterprise: true },
   { name: 'Dashboards', personal: false, starter: true, advanced: true, enterprise: true },
-  { name: 'Custom fields', personal: false, starter: true, advanced: true, enterprise: true },
-  { name: 'Task dependencies', personal: false, starter: true, advanced: true, enterprise: true },
+  { name: 'Benutzerdefinierte Felder', personal: false, starter: true, advanced: true, enterprise: true },
+  { name: 'Aufgabenabhängigkeiten', personal: false, starter: true, advanced: true, enterprise: true },
   { name: 'Portfolios', personal: false, starter: false, advanced: true, enterprise: true },
-  { name: 'Goals', personal: false, starter: false, advanced: true, enterprise: true },
-  { name: 'Custom rules', personal: false, starter: false, advanced: true, enterprise: true },
-  { name: 'Approvals', personal: false, starter: false, advanced: true, enterprise: true },
+  { name: 'Ziele', personal: false, starter: false, advanced: true, enterprise: true },
+  { name: 'Benutzerdefinierte Regeln', personal: false, starter: false, advanced: true, enterprise: true },
+  { name: 'Genehmigungen', personal: false, starter: false, advanced: true, enterprise: true },
   { name: 'SAML & SSO', personal: false, starter: false, advanced: false, enterprise: true },
-  { name: 'Data export', personal: false, starter: false, advanced: false, enterprise: true },
-  { name: 'Custom branding', personal: false, starter: false, advanced: false, enterprise: true },
-  { name: 'Priority support', personal: false, starter: false, advanced: false, enterprise: true },
+  { name: 'Datenexport', personal: false, starter: false, advanced: false, enterprise: true },
+  { name: 'Eigenes Branding', personal: false, starter: false, advanced: false, enterprise: true },
+  { name: 'Prioritäts-Support', personal: false, starter: false, advanced: false, enterprise: true },
 ]
 
 export default function PricingPage() {
@@ -109,10 +109,10 @@ export default function PricingPage() {
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/home" className="flex items-center gap-2 text-asana-text-secondary hover:text-asana-text-primary">
             <ArrowLeft size={18} />
-            <span className="text-sm">Back to Asana</span>
+            <span className="text-sm">Zurück</span>
           </Link>
-          <Link href="/home" className="text-xl font-semibold text-asana-coral">
-            asana
+          <Link href="/home">
+            <img src="/kneuss-logo.svg" alt="Kneuss" className="h-7" />
           </Link>
           <div className="w-24" />
         </div>
@@ -121,16 +121,16 @@ export default function PricingPage() {
       {/* Hero */}
       <div className="text-center py-12 px-4">
         <h1 className="text-3xl font-semibold text-asana-text-primary mb-3">
-          Choose the right plan for your team
+          Wählen Sie den richtigen Plan für Ihr Team
         </h1>
         <p className="text-asana-text-secondary max-w-lg mx-auto">
-          Whether you&apos;re a team of 2 or 2,000, Asana&apos;s flexible pricing lets you pick the plan that fits your needs.
+          Ob Team von 2 oder 200 – Kneuss bietet flexible Preispläne für Ihre Anforderungen.
         </p>
 
         {/* Billing Toggle */}
         <div className="flex items-center justify-center gap-3 mt-8">
           <span className={`text-sm ${!isAnnual ? 'text-asana-text-primary font-medium' : 'text-asana-text-secondary'}`}>
-            Monthly
+            Monatlich
           </span>
           <button
             onClick={() => setIsAnnual(!isAnnual)}
@@ -145,11 +145,11 @@ export default function PricingPage() {
             />
           </button>
           <span className={`text-sm ${isAnnual ? 'text-asana-text-primary font-medium' : 'text-asana-text-secondary'}`}>
-            Annual
+            Jährlich
           </span>
           {isAnnual && (
             <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">
-              Save up to 18%
+              Bis zu 18% sparen
             </span>
           )}
         </div>
@@ -169,21 +169,21 @@ export default function PricingPage() {
             >
               {plan.highlighted && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-asana-coral text-white text-xs font-medium px-3 py-1 rounded-full">
-                  Most Popular
+                  Beliebteste Wahl
                 </div>
               )}
               <h3 className="text-lg font-semibold text-asana-text-primary">{plan.name}</h3>
               <div className="mt-3 mb-1">
                 {plan.price.monthly === null ? (
-                  <span className="text-2xl font-semibold text-asana-text-primary">Custom</span>
+                  <span className="text-2xl font-semibold text-asana-text-primary">Individuell</span>
                 ) : plan.price.monthly === 0 ? (
-                  <span className="text-2xl font-semibold text-asana-text-primary">Free</span>
+                  <span className="text-2xl font-semibold text-asana-text-primary">Kostenlos</span>
                 ) : (
                   <>
                     <span className="text-3xl font-semibold text-asana-text-primary">
-                      ${isAnnual ? plan.price.annual : plan.price.monthly}
+                      CHF {isAnnual ? plan.price.annual : plan.price.monthly}
                     </span>
-                    <span className="text-sm text-asana-text-secondary"> /user/month</span>
+                    <span className="text-sm text-asana-text-secondary"> /Nutzer/Monat</span>
                   </>
                 )}
               </div>
@@ -196,7 +196,7 @@ export default function PricingPage() {
               <div className="space-y-3 flex-1">
                 {plan.features.map((feature, i) => (
                   <div key={i} className="flex items-start gap-2">
-                    {i === 0 && feature.startsWith('Everything') ? (
+                    {i === 0 && feature.startsWith('Alles') ? (
                       <span className="text-xs text-asana-text-secondary font-medium">{feature}</span>
                     ) : (
                       <>
@@ -218,7 +218,7 @@ export default function PricingPage() {
           onClick={() => setShowComparison(!showComparison)}
           className="w-full py-4 text-center text-sm font-medium text-asana-link hover:text-asana-coral transition-colors"
         >
-          {showComparison ? 'Hide' : 'Show'} full feature comparison
+          Vollständigen Funktionsvergleich {showComparison ? 'ausblenden' : 'anzeigen'}
         </button>
 
         {showComparison && (
@@ -227,7 +227,7 @@ export default function PricingPage() {
               <thead>
                 <tr className="border-b border-asana-border">
                   <th className="text-left py-3 px-4 text-sm font-semibold text-asana-text-primary w-1/5">
-                    Feature
+                    Funktion
                   </th>
                   {['Personal', 'Starter', 'Advanced', 'Enterprise'].map(name => (
                     <th key={name} className="text-center py-3 px-4 text-sm font-semibold text-asana-text-primary w-1/5">
@@ -266,25 +266,25 @@ export default function PricingPage() {
       <div className="bg-asana-bg-secondary py-16 px-4">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl font-semibold text-asana-text-primary text-center mb-8">
-            Frequently asked questions
+            Häufig gestellte Fragen
           </h2>
           <div className="space-y-4">
             {[
               {
-                q: 'Can I try a paid plan before purchasing?',
-                a: 'Yes! You can start a free 30-day trial of any paid plan. No credit card required.',
+                q: 'Kann ich einen kostenpflichtigen Plan vor dem Kauf testen?',
+                a: 'Ja! Sie können eine kostenlose 30-tägige Testversion jedes kostenpflichtigen Plans starten. Keine Kreditkarte erforderlich.',
               },
               {
-                q: 'How does per-user pricing work?',
-                a: 'You pay for each member who needs access to premium features. Guests with limited access are free.',
+                q: 'Wie funktioniert die Preisgestaltung pro Nutzer?',
+                a: 'Sie zahlen für jedes Mitglied, das Zugang zu Premium-Funktionen benötigt. Gäste mit eingeschränktem Zugang sind kostenlos.',
               },
               {
-                q: 'Can I change plans at any time?',
-                a: 'Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately.',
+                q: 'Kann ich den Plan jederzeit wechseln?',
+                a: 'Ja, Sie können Ihren Plan jederzeit upgraden oder downgraden. Änderungen werden sofort wirksam.',
               },
               {
-                q: 'What payment methods do you accept?',
-                a: 'We accept all major credit cards (Visa, Mastercard, American Express) and bank transfers for annual plans.',
+                q: 'Welche Zahlungsmethoden akzeptieren Sie?',
+                a: 'Wir akzeptieren alle gängigen Kreditkarten (Visa, Mastercard, American Express) und Banküberweisungen für Jahrespläne.',
               },
             ].map((faq, i) => (
               <details key={i} className="bg-white rounded-lg border border-asana-border group">

@@ -130,7 +130,7 @@ function BoardColumn({
               onBlur={() => {
                 if (!newTaskTitle.trim()) setIsAdding(false)
               }}
-              placeholder="Write a task name..."
+              placeholder="Aufgabenname eingeben..."
               className="w-full text-sm bg-transparent outline-none placeholder:text-asana-text-secondary text-asana-text-primary"
               autoFocus
             />
@@ -141,7 +141,7 @@ function BoardColumn({
             className="flex items-center gap-1.5 w-full py-2 px-2 text-sm text-asana-text-secondary hover:text-asana-text-primary hover:bg-asana-bg-secondary rounded-lg transition-colors"
           >
             <Plus size={14} />
-            <span>Add task</span>
+            <span>Aufgabe hinzufügen</span>
           </button>
         )}
       </div>
@@ -248,7 +248,7 @@ export default function TaskBoardView({
 
           {sections.length === 0 && (
             <div className="flex items-center justify-center w-full py-20 text-asana-text-secondary">
-              <p className="text-sm">No sections yet. Create a section to get started.</p>
+              <p className="text-sm">Noch keine Abschnitte. Erstellen Sie einen Abschnitt, um loszulegen.</p>
             </div>
           )}
         </div>

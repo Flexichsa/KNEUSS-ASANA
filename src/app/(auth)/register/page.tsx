@@ -41,13 +41,13 @@ export default function RegisterPage() {
       })
 
       if (result?.error) {
-        setError('Account created but login failed. Please log in manually.')
+        setError('Konto erstellt, aber Anmeldung fehlgeschlagen. Bitte melden Sie sich manuell an.')
         router.push('/login')
       } else {
         router.push('/home')
       }
     } catch {
-      setError('Something went wrong. Please try again.')
+      setError('Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.')
     } finally {
       setIsLoading(false)
     }
@@ -56,10 +56,10 @@ export default function RegisterPage() {
   return (
     <div>
       <h1 className="text-2xl font-normal text-asana-text-primary text-center mb-2">
-        Create your account
+        Konto erstellen
       </h1>
       <p className="text-sm text-asana-text-secondary text-center mb-8">
-        Start managing your work with Asana
+        Starten Sie mit Kneuss Projektmanagement
       </p>
 
       {error && (
@@ -74,14 +74,14 @@ export default function RegisterPage() {
             htmlFor="name"
             className="block text-sm font-medium text-asana-text-primary mb-1"
           >
-            Full name
+            Vollständiger Name
           </label>
           <input
             id="name"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Your full name"
+            placeholder="Ihr vollständiger Name"
             required
             className="asana-input"
             autoComplete="name"
@@ -93,14 +93,14 @@ export default function RegisterPage() {
             htmlFor="email"
             className="block text-sm font-medium text-asana-text-primary mb-1"
           >
-            Email address
+            E-Mail-Adresse
           </label>
           <input
             id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="name@company.com"
+            placeholder="name@firma.ch"
             required
             className="asana-input"
             autoComplete="email"
@@ -112,14 +112,14 @@ export default function RegisterPage() {
             htmlFor="password"
             className="block text-sm font-medium text-asana-text-primary mb-1"
           >
-            Password
+            Passwort
           </label>
           <input
             id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="At least 6 characters"
+            placeholder="Mindestens 6 Zeichen"
             required
             minLength={6}
             className="asana-input"
@@ -132,18 +132,18 @@ export default function RegisterPage() {
           disabled={isLoading}
           className="w-full bg-asana-coral hover:bg-asana-coral-hover text-white py-2.5 px-4 rounded-md text-sm font-medium transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isLoading ? 'Creating account...' : 'Sign Up'}
+          {isLoading ? 'Konto wird erstellt...' : 'Registrieren'}
         </button>
       </form>
 
       <div className="mt-6 text-center">
         <p className="text-sm text-asana-text-secondary">
-          Already have an account?{' '}
+          Bereits ein Konto?{' '}
           <Link
             href="/login"
             className="text-asana-link hover:underline font-medium"
           >
-            Log in
+            Anmelden
           </Link>
         </p>
       </div>

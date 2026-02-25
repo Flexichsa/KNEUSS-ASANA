@@ -61,11 +61,11 @@ export default function MyTasksPage() {
 
   const sections: TaskSection[] = [
     {
-      title: 'Overdue',
+      title: 'Überfällig',
       tasks: tasks.filter(t => t.dueDate && isDueDateOverdue(t.dueDate)),
     },
     {
-      title: 'Today',
+      title: 'Heute',
       tasks: tasks.filter(t => {
         if (!t.dueDate) return false
         const d = new Date(t.dueDate)
@@ -74,7 +74,7 @@ export default function MyTasksPage() {
       }),
     },
     {
-      title: 'Upcoming',
+      title: 'Anstehend',
       tasks: tasks.filter(t => {
         if (!t.dueDate) return false
         const d = new Date(t.dueDate)
@@ -83,7 +83,7 @@ export default function MyTasksPage() {
       }),
     },
     {
-      title: 'Later',
+      title: 'Später',
       tasks: tasks.filter(t => {
         if (!t.dueDate) {
           // Include tasks without a due date that aren't overdue
@@ -98,8 +98,8 @@ export default function MyTasksPage() {
 
   // Tasks without due date that weren't caught above
   const noDueDateTasks = tasks.filter(t => !t.dueDate)
-  if (noDueDateTasks.length > 0 && !sections.find(s => s.title === 'Recently Assigned')) {
-    sections.push({ title: 'Recently Assigned', tasks: noDueDateTasks })
+  if (noDueDateTasks.length > 0 && !sections.find(s => s.title === 'Kürzlich zugewiesen')) {
+    sections.push({ title: 'Kürzlich zugewiesen', tasks: noDueDateTasks })
   }
 
   if (loading) {
@@ -118,14 +118,14 @@ export default function MyTasksPage() {
   return (
     <div className="p-6 max-w-5xl">
       <div className="mb-6">
-        <h1 className="text-xl font-medium text-asana-text-primary">My Tasks</h1>
+        <h1 className="text-xl font-medium text-asana-text-primary">Meine Aufgaben</h1>
       </div>
 
       {sections.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-asana-text-secondary">No tasks assigned to you yet.</p>
+          <p className="text-asana-text-secondary">Ihnen wurden noch keine Aufgaben zugewiesen.</p>
           <p className="text-sm text-asana-text-secondary mt-1">
-            Tasks assigned to you will appear here.
+            Ihnen zugewiesene Aufgaben erscheinen hier.
           </p>
         </div>
       ) : (

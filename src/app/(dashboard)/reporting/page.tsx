@@ -35,7 +35,7 @@ export default function ReportingPage() {
 
   return (
     <div className="p-6 max-w-5xl">
-      <h1 className="text-xl font-medium text-asana-text-primary mb-6">Reporting</h1>
+      <h1 className="text-xl font-medium text-asana-text-primary mb-6">Berichte</h1>
 
       {loading ? (
         <div className="animate-pulse grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -49,7 +49,7 @@ export default function ReportingPage() {
                 <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
                   <BarChart3 size={16} className="text-asana-link" />
                 </div>
-                <span className="text-sm font-medium text-asana-text-secondary">Total Tasks</span>
+                <span className="text-sm font-medium text-asana-text-secondary">Alle Aufgaben</span>
               </div>
               <p className="text-3xl font-semibold text-asana-text-primary">{stats.totalTasks}</p>
             </div>
@@ -58,7 +58,7 @@ export default function ReportingPage() {
                 <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center">
                   <TrendingUp size={16} className="text-asana-success" />
                 </div>
-                <span className="text-sm font-medium text-asana-text-secondary">Completion Rate</span>
+                <span className="text-sm font-medium text-asana-text-secondary">Abschlussrate</span>
               </div>
               <p className="text-3xl font-semibold text-asana-text-primary">{completionRate}%</p>
               <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
@@ -73,21 +73,21 @@ export default function ReportingPage() {
                 <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center">
                   <FolderOpen size={16} className="text-asana-project-purple" />
                 </div>
-                <span className="text-sm font-medium text-asana-text-secondary">Projects</span>
+                <span className="text-sm font-medium text-asana-text-secondary">Projekte</span>
               </div>
               <p className="text-3xl font-semibold text-asana-text-primary">{stats.totalProjects}</p>
             </div>
           </div>
 
           <div className="asana-card">
-            <h2 className="text-sm font-semibold text-asana-text-primary mb-4">Task Overview</h2>
+            <h2 className="text-sm font-semibold text-asana-text-primary mb-4">Aufgabenübersicht</h2>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-asana-text-secondary">Completed</span>
+                <span className="text-sm text-asana-text-secondary">Abgeschlossen</span>
                 <span className="text-sm font-medium text-asana-success">{stats.completedTasks}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-asana-text-secondary">In Progress</span>
+                <span className="text-sm text-asana-text-secondary">In Bearbeitung</span>
                 <span className="text-sm font-medium text-asana-link">{stats.totalTasks - stats.completedTasks}</span>
               </div>
             </div>

@@ -31,9 +31,9 @@ export default function HomePage() {
 
   const greeting = () => {
     const hour = new Date().getHours()
-    if (hour < 12) return 'Good morning'
-    if (hour < 18) return 'Good afternoon'
-    return 'Good evening'
+    if (hour < 12) return 'Guten Morgen'
+    if (hour < 18) return 'Guten Tag'
+    return 'Guten Abend'
   }
 
   if (loading) {
@@ -57,7 +57,7 @@ export default function HomePage() {
           {greeting()}, {session?.user?.name?.split(' ')[0]}
         </h1>
         <p className="text-asana-text-secondary mt-1">
-          Here&apos;s what&apos;s happening with your tasks today.
+          Hier ist der aktuelle Stand Ihrer Aufgaben.
         </p>
       </div>
 
@@ -69,7 +69,7 @@ export default function HomePage() {
           </div>
           <div>
             <p className="text-2xl font-semibold text-asana-text-primary">{tasks.length}</p>
-            <p className="text-xs text-asana-text-secondary">Total Tasks</p>
+            <p className="text-xs text-asana-text-secondary">Alle Aufgaben</p>
           </div>
         </div>
         <div className="asana-card flex items-center gap-4">
@@ -78,7 +78,7 @@ export default function HomePage() {
           </div>
           <div>
             <p className="text-2xl font-semibold text-asana-text-primary">{completedTasks}</p>
-            <p className="text-xs text-asana-text-secondary">Completed</p>
+            <p className="text-xs text-asana-text-secondary">Abgeschlossen</p>
           </div>
         </div>
         <div className="asana-card flex items-center gap-4">
@@ -87,7 +87,7 @@ export default function HomePage() {
           </div>
           <div>
             <p className="text-2xl font-semibold text-asana-text-primary">{overdueTasks.length}</p>
-            <p className="text-xs text-asana-text-secondary">Overdue</p>
+            <p className="text-xs text-asana-text-secondary">Überfällig</p>
           </div>
         </div>
         <div className="asana-card flex items-center gap-4">
@@ -96,7 +96,7 @@ export default function HomePage() {
           </div>
           <div>
             <p className="text-2xl font-semibold text-asana-text-primary">{projects.length}</p>
-            <p className="text-xs text-asana-text-secondary">Projects</p>
+            <p className="text-xs text-asana-text-secondary">Projekte</p>
           </div>
         </div>
       </div>
@@ -106,11 +106,11 @@ export default function HomePage() {
         <div className="asana-card">
           <h2 className="text-sm font-semibold text-asana-text-primary mb-4 flex items-center gap-2">
             <Clock size={16} />
-            Upcoming Tasks
+            Anstehende Aufgaben
           </h2>
           {upcomingTasks.length === 0 ? (
             <p className="text-sm text-asana-text-secondary py-4 text-center">
-              No upcoming tasks. You&apos;re all caught up!
+              Keine anstehenden Aufgaben. Alles erledigt!
             </p>
           ) : (
             <div className="space-y-2">
@@ -142,11 +142,11 @@ export default function HomePage() {
         <div className="asana-card">
           <h2 className="text-sm font-semibold text-asana-text-primary mb-4 flex items-center gap-2">
             <FolderOpen size={16} />
-            Your Projects
+            Ihre Projekte
           </h2>
           {projects.length === 0 ? (
             <p className="text-sm text-asana-text-secondary py-4 text-center">
-              No projects yet. Create one to get started!
+              Noch keine Projekte. Erstellen Sie eines, um loszulegen!
             </p>
           ) : (
             <div className="space-y-2">
@@ -164,7 +164,7 @@ export default function HomePage() {
                     {project.name}
                   </span>
                   <span className="text-xs text-asana-text-secondary">
-                    {project._count?.tasks ?? 0} tasks
+                    {project._count?.tasks ?? 0} Aufgaben
                   </span>
                 </Link>
               ))}
@@ -178,7 +178,7 @@ export default function HomePage() {
         <div className="mt-6 asana-card border-l-4 border-l-asana-danger">
           <h2 className="text-sm font-semibold text-asana-danger mb-3 flex items-center gap-2">
             <AlertTriangle size={16} />
-            Overdue Tasks ({overdueTasks.length})
+            Überfällige Aufgaben ({overdueTasks.length})
           </h2>
           <div className="space-y-2">
             {overdueTasks.map(task => (

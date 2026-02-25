@@ -11,10 +11,10 @@ interface ProjectViewTabsProps {
 }
 
 const tabs = [
-  { key: 'list' as const, label: 'List', icon: List },
+  { key: 'list' as const, label: 'Liste', icon: List },
   { key: 'board' as const, label: 'Board', icon: LayoutGrid },
-  { key: 'calendar' as const, label: 'Calendar', icon: Calendar },
-  { key: 'timeline' as const, label: 'Timeline', icon: GitBranch },
+  { key: 'calendar' as const, label: 'Kalender', icon: Calendar },
+  { key: 'timeline' as const, label: 'Zeitachse', icon: GitBranch },
 ]
 
 export default function ProjectViewTabs({ projectId, activeView }: ProjectViewTabsProps) {

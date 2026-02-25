@@ -3,8 +3,8 @@ import './globals.css'
 import SessionProvider from '@/components/providers/SessionProvider'
 
 export const metadata: Metadata = {
-  title: 'Asana - Manage your team\'s work, projects, & tasks online',
-  description: 'Work management platform to organize work, from daily tasks to strategic initiatives.',
+  title: 'Kneuss - Projektmanagement f\u00fcr Ihren Betrieb',
+  description: 'Projektmanagement-Plattform f\u00fcr die Organisation von Aufgaben, Projekten und Teams.',
 }
 
 export default function RootLayout({

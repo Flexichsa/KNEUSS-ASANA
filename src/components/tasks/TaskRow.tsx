@@ -79,7 +79,7 @@ export default function TaskRow({ task, onSelect, isSelected, onRefresh }: TaskR
           </div>
         ) : (
           <span className="text-xs text-asana-text-secondary opacity-0 group-hover:opacity-100 transition-opacity">
-            Assign
+            Zuweisen
           </span>
         )}
       </td>
@@ -99,7 +99,7 @@ export default function TaskRow({ task, onSelect, isSelected, onRefresh }: TaskR
           </span>
         ) : (
           <span className="text-xs text-asana-text-secondary opacity-0 group-hover:opacity-100 transition-opacity">
-            Set date
+            Datum setzen
           </span>
         )}
       </td>

@@ -30,7 +30,7 @@ export default function LoginPage() {
         router.push('/home')
       }
     } catch {
-      setError('Something went wrong. Please try again.')
+      setError('Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.')
     } finally {
       setIsLoading(false)
     }
@@ -39,10 +39,10 @@ export default function LoginPage() {
   return (
     <div>
       <h1 className="text-2xl font-normal text-asana-text-primary text-center mb-2">
-        Welcome back
+        Willkommen zurück
       </h1>
       <p className="text-sm text-asana-text-secondary text-center mb-8">
-        Log in to your Asana account
+        Melden Sie sich bei Kneuss an
       </p>
 
       {error && (
@@ -57,14 +57,14 @@ export default function LoginPage() {
             htmlFor="email"
             className="block text-sm font-medium text-asana-text-primary mb-1"
           >
-            Email address
+            E-Mail-Adresse
           </label>
           <input
             id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="name@company.com"
+            placeholder="name@firma.ch"
             required
             className="asana-input"
             autoComplete="email"
@@ -76,14 +76,14 @@ export default function LoginPage() {
             htmlFor="password"
             className="block text-sm font-medium text-asana-text-primary mb-1"
           >
-            Password
+            Passwort
           </label>
           <input
             id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
+            placeholder="Passwort eingeben"
             required
             className="asana-input"
             autoComplete="current-password"
@@ -95,18 +95,18 @@ export default function LoginPage() {
           disabled={isLoading}
           className="w-full bg-asana-coral hover:bg-asana-coral-hover text-white py-2.5 px-4 rounded-md text-sm font-medium transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isLoading ? 'Logging in...' : 'Log In'}
+          {isLoading ? 'Anmelden...' : 'Anmelden'}
         </button>
       </form>
 
       <div className="mt-6 text-center">
         <p className="text-sm text-asana-text-secondary">
-          Don&apos;t have an account?{' '}
+          Noch kein Konto?{' '}
           <Link
             href="/register"
             className="text-asana-link hover:underline font-medium"
           >
-            Sign up
+            Registrieren
           </Link>
         </p>
       </div>

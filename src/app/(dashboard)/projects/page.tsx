@@ -28,13 +28,13 @@ export default function ProjectsPage() {
   return (
     <div className="p-6 max-w-5xl">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-medium text-asana-text-primary">Projects</h1>
+        <h1 className="text-xl font-medium text-asana-text-primary">Projekte</h1>
         <button
           onClick={() => setShowCreateModal(true)}
           className="asana-btn-primary flex items-center gap-2"
         >
           <Plus size={16} />
-          New Project
+          Neues Projekt
         </button>
       </div>
 
@@ -49,16 +49,16 @@ export default function ProjectsPage() {
           <div className="w-16 h-16 rounded-full bg-asana-bg-secondary flex items-center justify-center mx-auto mb-4">
             <FolderOpen size={28} className="text-asana-text-secondary" />
           </div>
-          <h2 className="text-lg font-medium text-asana-text-primary mb-2">Create your first project</h2>
+          <h2 className="text-lg font-medium text-asana-text-primary mb-2">Erstellen Sie Ihr erstes Projekt</h2>
           <p className="text-sm text-asana-text-secondary max-w-md mx-auto mb-4">
-            Projects help you organize and track your team&apos;s work.
+            Projekte helfen Ihnen, die Arbeit Ihres Teams zu organisieren und zu verfolgen.
           </p>
           <button
             onClick={() => setShowCreateModal(true)}
             className="asana-btn-primary"
           >
             <Plus size={16} className="inline mr-1.5" />
-            New Project
+            Neues Projekt
           </button>
         </div>
       ) : (
@@ -90,7 +90,7 @@ export default function ProjectsPage() {
               )}
               <div className="flex items-center gap-2 mt-3">
                 <span className="text-xs text-asana-text-secondary">
-                  {project._count?.tasks ?? 0} tasks
+                  {project._count?.tasks ?? 0} Aufgaben
                 </span>
               </div>
             </Link>

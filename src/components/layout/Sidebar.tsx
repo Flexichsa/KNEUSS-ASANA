@@ -27,12 +27,12 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: 'Home', href: '/home', icon: Home },
-  { label: 'My Tasks', href: '/my-tasks', icon: CheckSquare },
-  { label: 'Inbox', href: '/inbox', icon: Bell, badge: true },
-  { label: 'Reporting', href: '/reporting', icon: BarChart3 },
+  { label: 'Startseite', href: '/home', icon: Home },
+  { label: 'Meine Aufgaben', href: '/my-tasks', icon: CheckSquare },
+  { label: 'Posteingang', href: '/inbox', icon: Bell, badge: true },
+  { label: 'Berichte', href: '/reporting', icon: BarChart3 },
   { label: 'Portfolios', href: '/goals', icon: Briefcase },
-  { label: 'Goals', href: '/goals', icon: Target },
+  { label: 'Ziele', href: '/goals', icon: Target },
 ]
 
 export default function Sidebar() {
@@ -77,9 +77,9 @@ export default function Sidebar() {
           <div className="flex items-center justify-between px-4 h-12 flex-shrink-0">
             <Link
               href="/home"
-              className="text-asana-sidebar-active text-sm font-semibold truncate hover:opacity-80 transition-opacity"
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
             >
-              Kneuss Asana
+              <img src="/kneuss-logo-white.svg" alt="Kneuss" className="h-6" />
             </Link>
             <button
               onClick={toggleCollapsed}
@@ -124,7 +124,7 @@ export default function Sidebar() {
           <div className="flex-1 overflow-y-auto scrollbar-thin">
             <div className="flex items-center justify-between px-4 mb-1">
               <span className="text-xs font-medium text-asana-sidebar-text uppercase tracking-wider">
-                Projects
+                Projekte
               </span>
               <button
                 className="flex items-center justify-center w-5 h-5 rounded text-asana-sidebar-text hover:text-asana-sidebar-active hover:bg-asana-sidebar-hover transition-colors"
