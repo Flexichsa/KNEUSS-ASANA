@@ -3,12 +3,10 @@
 import { useSession } from 'next-auth/react'
 import { useEffect, useState, useCallback } from 'react'
 import { TaskType } from '@/types'
-import { formatDueDate, isDueDateOverdue, PRIORITY_OPTIONS } from '@/lib/utils'
-import Checkbox from '@/components/ui/Checkbox'
-import Badge from '@/components/ui/Badge'
+import { isDueDateOverdue, STATUS_OPTIONS } from '@/lib/utils'
+import TaskRow from '@/components/tasks/TaskRow'
 import TaskDetailPane from '@/components/tasks/TaskDetailPane'
-import { ChevronDown, ChevronRight } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { ChevronDown, ChevronRight, Plus } from 'lucide-react'
 
 interface TaskSection {
   title: string
@@ -36,15 +34,6 @@ export default function MyTasksPage() {
   }, [session?.user?.id])
 
   useEffect(() => { fetchTasks() }, [fetchTasks])
-
-  const toggleComplete = async (taskId: string) => {
-    await fetch(`/api/tasks/${taskId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ completed: true }),
-    })
-    fetchTasks()
-  }
 
   const toggleSection = (title: string) => {
     setCollapsedSections(prev => {
@@ -106,7 +95,7 @@ export default function MyTasksPage() {
         <div className="animate-pulse space-y-4">
           <div className="h-6 bg-gray-200 rounded w-32" />
           {[1, 2, 3, 4, 5].map(i => (
-            <div key={i} className="h-10 bg-gray-100 rounded" />
+            <div key={i} className="h-9 bg-gray-100 rounded" />
           ))}
         </div>
       </div>
@@ -116,94 +105,101 @@ export default function MyTasksPage() {
   return (
     <div className="h-full flex">
       {/* Task list */}
-      <div className="flex-1 overflow-y-auto p-6">
-        <div className="max-w-4xl">
-          <div className="mb-6">
-            <h1 className="text-xl font-medium text-asana-text-primary">Meine Aufgaben</h1>
-          </div>
-
-          {sections.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-asana-text-secondary">Ihnen wurden noch keine Aufgaben zugewiesen.</p>
-              <p className="text-sm text-asana-text-secondary mt-1">
-                Ihnen zugewiesene Aufgaben erscheinen hier.
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-1">
-              {sections.map(section => (
-                <div key={section.title}>
-                  {/* Section Header */}
-                  <button
-                    onClick={() => toggleSection(section.title)}
-                    className="flex items-center gap-2 py-2 px-2 w-full text-left hover:bg-asana-bg-secondary rounded-md group"
-                  >
-                    {collapsedSections.has(section.title) ? (
-                      <ChevronRight size={14} className="text-asana-text-secondary" />
-                    ) : (
-                      <ChevronDown size={14} className="text-asana-text-secondary" />
-                    )}
-                    <span className="text-sm font-semibold text-asana-text-primary">
-                      {section.title}
-                    </span>
-                    <span className="text-xs text-asana-text-secondary">
-                      {section.tasks.length}
-                    </span>
-                  </button>
-
-                  {/* Tasks */}
-                  {!collapsedSections.has(section.title) && (
-                    <div>
-                      {section.tasks.map(task => {
-                        const priorityOption = PRIORITY_OPTIONS.find(p => p.value === task.priority)
-                        return (
-                          <div
-                            key={task.id}
-                            onClick={() => setSelectedTaskId(task.id)}
-                            className={cn(
-                              'flex items-center gap-3 py-2 px-2 pl-8 rounded-md group border-b border-asana-border last:border-0 cursor-pointer transition-colors',
-                              selectedTaskId === task.id ? 'bg-blue-50' : 'hover:bg-asana-bg-secondary'
-                            )}
-                          >
-                            <Checkbox
-                              checked={task.completed}
-                              onChange={() => toggleComplete(task.id)}
-                              size="sm"
-                            />
-                            <span className="flex-1 text-sm text-asana-text-primary truncate">
-                              {task.title}
-                            </span>
-                            {task.dueDate && (
-                              <span
-                                className={`text-xs ${
-                                  isDueDateOverdue(task.dueDate)
-                                    ? 'text-asana-danger font-medium'
-                                    : 'text-asana-text-secondary'
-                                }`}
-                              >
-                                {formatDueDate(task.dueDate)}
-                              </span>
-                            )}
-                            {priorityOption && (
-                              <Badge variant="priority" color={priorityOption.color}>
-                                {priorityOption.label}
-                              </Badge>
-                            )}
-                            {task.project && (
-                              <span className="text-xs text-asana-text-secondary truncate max-w-[120px]">
-                                {task.project.name}
-                              </span>
-                            )}
-                          </div>
-                        )
-                      })}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
+      <div className="flex-1 overflow-y-auto">
+        {/* Column headers - sticky row */}
+        <div className="sticky top-0 z-20 bg-white border-b border-asana-border">
+          <table className="w-full table-fixed">
+            <colgroup>
+              <col /> {/* Task name - flexible */}
+              <col style={{ width: 52 }} /> {/* Zuständig */}
+              <col style={{ width: 110 }} /> {/* Fälligkeitsdatum */}
+              <col style={{ width: 120 }} /> {/* Status */}
+              <col style={{ width: 140 }} /> {/* Projekt */}
+              <col style={{ width: 48 }} /> {/* Priorität */}
+            </colgroup>
+            <thead>
+              <tr>
+                <th className="text-left py-1.5 pl-4 pr-2 text-[11px] font-medium text-asana-text-secondary tracking-wide">
+                  Aufgabenname
+                </th>
+                <th className="py-1.5 px-1 text-[11px] font-medium text-asana-text-secondary text-center tracking-wide">
+                  Zuständig
+                </th>
+                <th className="text-left py-1.5 px-3 text-[11px] font-medium text-asana-text-secondary tracking-wide">
+                  Fällig am
+                </th>
+                <th className="text-left py-1.5 px-2 text-[11px] font-medium text-asana-text-secondary tracking-wide">
+                  Status
+                </th>
+                <th className="text-left py-1.5 px-3 text-[11px] font-medium text-asana-text-secondary tracking-wide">
+                  Projekt
+                </th>
+                <th className="py-1.5 px-2 text-[11px] font-medium text-asana-text-secondary text-center tracking-wide">
+                  Prio
+                </th>
+              </tr>
+            </thead>
+          </table>
         </div>
+
+        {sections.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-asana-text-secondary">Ihnen wurden noch keine Aufgaben zugewiesen.</p>
+            <p className="text-sm text-asana-text-secondary mt-1">
+              Ihnen zugewiesene Aufgaben erscheinen hier.
+            </p>
+          </div>
+        ) : (
+          sections.map(section => (
+            <div key={section.title}>
+              {/* Section Header */}
+              <div
+                onClick={() => toggleSection(section.title)}
+                className="flex items-center gap-2 py-2 px-4 cursor-pointer group hover:bg-asana-bg-secondary sticky top-[33px] bg-white z-10 border-b border-asana-border"
+              >
+                <button className="p-0.5 text-asana-text-secondary hover:text-asana-text-primary transition-colors">
+                  {collapsedSections.has(section.title) ? (
+                    <ChevronRight size={14} />
+                  ) : (
+                    <ChevronDown size={14} />
+                  )}
+                </button>
+                <h3 className="text-[13px] font-semibold text-asana-text-primary">
+                  {section.title}
+                </h3>
+                <span className="text-[11px] text-asana-text-secondary">
+                  {section.tasks.length}
+                </span>
+              </div>
+
+              {/* Tasks */}
+              {!collapsedSections.has(section.title) && (
+                <table className="w-full table-fixed">
+                  <colgroup>
+                    <col /> {/* Task name - flexible */}
+                    <col style={{ width: 52 }} /> {/* Zuständig */}
+                    <col style={{ width: 110 }} /> {/* Fälligkeitsdatum */}
+                    <col style={{ width: 120 }} /> {/* Status */}
+                    <col style={{ width: 140 }} /> {/* Projekt */}
+                    <col style={{ width: 48 }} /> {/* Priorität */}
+                  </colgroup>
+                  <tbody>
+                    {section.tasks.map(task => (
+                      <TaskRow
+                        key={task.id}
+                        task={task}
+                        onSelect={(id) => setSelectedTaskId(id)}
+                        isSelected={selectedTaskId === task.id}
+                        onRefresh={fetchTasks}
+                        showProject={true}
+                      />
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          ))
+        )}
       </div>
 
       {/* Detail pane */}

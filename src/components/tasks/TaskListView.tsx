@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState } from 'react'
-import { cn } from '@/lib/utils'
 import type { SectionType } from '@/types'
 import TaskRow from '@/components/tasks/TaskRow'
 import { ChevronDown, ChevronRight, Plus } from 'lucide-react'
@@ -63,45 +62,36 @@ function SectionGroup({
   }
 
   const tasks = section.tasks || []
+  const completedCount = tasks.filter(t => t.completed).length
 
   return (
-    <div className="mb-1">
+    <div>
       {/* Section Header */}
       <div
-        className="flex items-center gap-2 py-2 px-4 cursor-pointer group hover:bg-asana-bg-secondary sticky top-0 bg-white z-10 border-b border-asana-border"
+        className="flex items-center gap-2 py-2 px-4 cursor-pointer group hover:bg-asana-bg-secondary sticky top-[33px] bg-white z-10 border-b border-asana-border"
         onClick={() => setCollapsed(!collapsed)}
       >
         <button className="p-0.5 text-asana-text-secondary hover:text-asana-text-primary transition-colors">
-          {collapsed ? <ChevronRight size={16} /> : <ChevronDown size={16} />}
+          {collapsed ? <ChevronRight size={14} /> : <ChevronDown size={14} />}
         </button>
-        <h3 className="text-sm font-semibold text-asana-text-primary">
+        <h3 className="text-[13px] font-semibold text-asana-text-primary">
           {section.name}
         </h3>
-        <span className="text-xs text-asana-text-secondary">
-          {tasks.length}
+        <span className="text-[11px] text-asana-text-secondary">
+          {completedCount}/{tasks.length}
         </span>
       </div>
 
       {/* Section Tasks */}
       {!collapsed && (
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-asana-border">
-              <th className="w-10" />
-              <th className="text-left py-1.5 px-3 text-xs font-medium text-asana-text-secondary uppercase tracking-wider">
-                Aufgabenname
-              </th>
-              <th className="w-[140px] text-left py-1.5 px-3 text-xs font-medium text-asana-text-secondary uppercase tracking-wider">
-                Zuständig
-              </th>
-              <th className="w-[120px] text-left py-1.5 px-3 text-xs font-medium text-asana-text-secondary uppercase tracking-wider">
-                Fällig am
-              </th>
-              <th className="w-[100px] text-left py-1.5 px-3 text-xs font-medium text-asana-text-secondary uppercase tracking-wider">
-                Priorität
-              </th>
-            </tr>
-          </thead>
+        <table className="w-full table-fixed">
+          <colgroup>
+            <col /> {/* Task name - flexible */}
+            <col style={{ width: 52 }} /> {/* Zuständig */}
+            <col style={{ width: 110 }} /> {/* Fälligkeitsdatum */}
+            <col style={{ width: 120 }} /> {/* Status */}
+            <col style={{ width: 48 }} /> {/* Priorität */}
+          </colgroup>
           <tbody>
             {tasks.map((task) => (
               <TaskRow
@@ -110,6 +100,7 @@ function SectionGroup({
                 onSelect={onTaskSelect}
                 isSelected={selectedTaskId === task.id}
                 onRefresh={onRefresh}
+                showProject={false}
               />
             ))}
           </tbody>
@@ -120,8 +111,8 @@ function SectionGroup({
       {!collapsed && (
         <div className="border-b border-asana-border">
           {isAdding ? (
-            <div className="flex items-center gap-2 py-2 px-4">
-              <div className="w-4 h-4 rounded-full border-2 border-gray-300 flex-shrink-0" />
+            <div className="flex items-center gap-2 py-1.5 px-4">
+              <div className="w-[18px] h-[18px] rounded-full border-2 border-gray-300 flex-shrink-0" />
               <input
                 type="text"
                 value={newTaskTitle}
@@ -133,17 +124,17 @@ function SectionGroup({
                   }
                 }}
                 placeholder="Aufgabenname eingeben..."
-                className="flex-1 text-sm bg-transparent outline-none placeholder:text-asana-text-secondary text-asana-text-primary"
+                className="flex-1 text-[13px] bg-transparent outline-none placeholder:text-asana-text-secondary text-asana-text-primary"
                 autoFocus
               />
             </div>
           ) : (
             <button
               onClick={() => setIsAdding(true)}
-              className="flex items-center gap-2 w-full py-2 px-4 text-sm text-asana-text-secondary hover:text-asana-text-primary hover:bg-asana-bg-secondary transition-colors"
+              className="flex items-center gap-2 w-full py-1.5 px-4 text-[13px] text-asana-text-secondary hover:text-asana-text-primary hover:bg-asana-bg-secondary transition-colors"
             >
               <Plus size={14} />
-              <span>Aufgabe hinzufügen...</span>
+              <span>Aufgabe hinzufügen</span>
             </button>
           )}
         </div>
@@ -181,6 +172,39 @@ export default function TaskListView({
 
   return (
     <div className="flex-1 overflow-auto">
+      {/* Column headers - sticky row */}
+      <div className="sticky top-0 z-20 bg-white border-b border-asana-border">
+        <table className="w-full table-fixed">
+          <colgroup>
+            <col /> {/* Task name - flexible */}
+            <col style={{ width: 52 }} /> {/* Zuständig */}
+            <col style={{ width: 110 }} /> {/* Fälligkeitsdatum */}
+            <col style={{ width: 120 }} /> {/* Status */}
+            <col style={{ width: 48 }} /> {/* Priorität */}
+          </colgroup>
+          <thead>
+            <tr>
+              <th className="text-left py-1.5 pl-4 pr-2 text-[11px] font-medium text-asana-text-secondary tracking-wide">
+                Aufgabenname
+              </th>
+              <th className="py-1.5 px-1 text-[11px] font-medium text-asana-text-secondary text-center tracking-wide">
+                Zuständig
+              </th>
+              <th className="text-left py-1.5 px-3 text-[11px] font-medium text-asana-text-secondary tracking-wide">
+                Fällig am
+              </th>
+              <th className="text-left py-1.5 px-2 text-[11px] font-medium text-asana-text-secondary tracking-wide">
+                Status
+              </th>
+              <th className="py-1.5 px-2 text-[11px] font-medium text-asana-text-secondary text-center tracking-wide">
+                Prio
+              </th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+      {/* Sections */}
       {sections.map((section) => (
         <SectionGroup
           key={section.id}
@@ -208,14 +232,14 @@ export default function TaskListView({
                 if (!addingSectionName.trim()) setIsAddingSection(false)
               }}
               placeholder="Abschnittname eingeben..."
-              className="flex-1 text-sm font-semibold bg-transparent outline-none placeholder:text-asana-text-secondary text-asana-text-primary"
+              className="flex-1 text-[13px] font-semibold bg-transparent outline-none placeholder:text-asana-text-secondary text-asana-text-primary"
               autoFocus
             />
           </div>
         ) : (
           <button
             onClick={() => setIsAddingSection(true)}
-            className="flex items-center gap-2 w-full py-2 px-4 text-sm text-asana-text-secondary hover:text-asana-text-primary hover:bg-asana-bg-secondary transition-colors"
+            className="flex items-center gap-2 w-full py-2 px-4 text-[13px] text-asana-text-secondary hover:text-asana-text-primary hover:bg-asana-bg-secondary transition-colors"
           >
             <Plus size={14} />
             <span>Abschnitt hinzufügen</span>
