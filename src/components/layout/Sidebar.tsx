@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import {
   Home,
   CheckSquare,
   Bell,
   BarChart3,
-  Briefcase,
   Target,
+  FolderOpen,
   Plus,
   PanelLeftClose,
   Menu,
@@ -30,13 +30,14 @@ const navItems: NavItem[] = [
   { label: 'Startseite', href: '/home', icon: Home },
   { label: 'Meine Aufgaben', href: '/my-tasks', icon: CheckSquare },
   { label: 'Posteingang', href: '/inbox', icon: Bell, badge: true },
+  { label: 'Projekte', href: '/projects', icon: FolderOpen },
   { label: 'Berichte', href: '/reporting', icon: BarChart3 },
-  { label: 'Portfolios', href: '/goals', icon: Briefcase },
   { label: 'Ziele', href: '/goals', icon: Target },
 ]
 
 export default function Sidebar() {
   const pathname = usePathname()
+  const router = useRouter()
   const [collapsed, setCollapsed] = useState(false)
 
   // Load collapsed state from localStorage
@@ -96,7 +97,7 @@ export default function Sidebar() {
               const Icon = item.icon
               const isActive =
                 pathname === item.href ||
-                (item.href !== '/home' && pathname.startsWith(item.href + '/'))
+                (item.href !== '/home' && item.href !== '/projects' && pathname.startsWith(item.href + '/'))
 
               return (
                 <Link
@@ -127,8 +128,9 @@ export default function Sidebar() {
                 Projekte
               </span>
               <button
+                onClick={() => router.push('/projects')}
                 className="flex items-center justify-center w-5 h-5 rounded text-asana-sidebar-text hover:text-asana-sidebar-active hover:bg-asana-sidebar-hover transition-colors"
-                aria-label="Add project"
+                aria-label="Projekt hinzufügen"
               >
                 <Plus className="w-3.5 h-3.5" />
               </button>

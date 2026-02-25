@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import type { ProjectType } from '@/types'
 import Avatar from '@/components/ui/Avatar'
@@ -11,9 +12,11 @@ import { MoreHorizontal, Settings, Trash2, UserPlus } from 'lucide-react'
 interface ProjectHeaderProps {
   project: ProjectType
   activeView: 'list' | 'board' | 'calendar' | 'timeline'
+  onProjectDeleted?: () => void
 }
 
-export default function ProjectHeader({ project, activeView }: ProjectHeaderProps) {
+export default function ProjectHeader({ project, activeView, onProjectDeleted }: ProjectHeaderProps) {
+  const router = useRouter()
   const [name, setName] = useState(project.name)
   const [isEditing, setIsEditing] = useState(false)
 
@@ -48,20 +51,33 @@ export default function ProjectHeader({ project, activeView }: ProjectHeaderProp
 
   const members = project.members || []
 
+  const handleDeleteProject = async () => {
+    if (!confirm('Projekt wirklich löschen?')) return
+    try {
+      const res = await fetch(`/api/projects/${project.id}`, { method: 'DELETE' })
+      if (res.ok) {
+        onProjectDeleted?.()
+        router.push('/projects')
+      }
+    } catch (error) {
+      console.error('Failed to delete project:', error)
+    }
+  }
+
   const menuItems = [
     {
       label: 'Projekteinstellungen',
-      onClick: () => {},
+      onClick: () => { alert('Einstellungen kommen bald') },
       icon: <Settings size={14} />,
     },
     {
       label: 'Mitglieder hinzufügen',
-      onClick: () => {},
+      onClick: () => { alert('Mitglieder-Verwaltung kommt bald') },
       icon: <UserPlus size={14} />,
     },
     {
       label: 'Projekt löschen',
-      onClick: () => {},
+      onClick: handleDeleteProject,
       icon: <Trash2 size={14} />,
       destructive: true,
       separator: true,

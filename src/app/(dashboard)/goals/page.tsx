@@ -7,7 +7,7 @@ export default function GoalsPage() {
     <div className="p-6 max-w-5xl">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-xl font-medium text-asana-text-primary">Ziele</h1>
-        <button className="asana-btn-primary flex items-center gap-2">
+        <button onClick={() => alert('Ziele-Funktionalität kommt bald')} className="asana-btn-primary flex items-center gap-2">
           <Plus size={16} />
           Ziel hinzufügen
         </button>
@@ -21,7 +21,7 @@ export default function GoalsPage() {
         <p className="text-sm text-asana-text-secondary max-w-md mx-auto">
           Definieren und verfolgen Sie Ziele für Ihr Team. Verbinden Sie Ziele mit den Projekten und Aufgaben, die sie vorantreiben.
         </p>
-        <button className="asana-btn-primary mt-4">
+        <button onClick={() => alert('Ziele-Funktionalität kommt bald')} className="asana-btn-primary mt-4">
           <Plus size={16} className="inline mr-1.5" />
           Unternehmensziel hinzufügen
         </button>

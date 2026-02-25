@@ -7,6 +7,7 @@ import type { TaskType } from '@/types'
 import Checkbox from '@/components/ui/Checkbox'
 import Avatar from '@/components/ui/Avatar'
 import Badge from '@/components/ui/Badge'
+import { UserPlus, CalendarPlus } from 'lucide-react'
 
 interface TaskRowProps {
   task: TaskType
@@ -78,7 +79,8 @@ export default function TaskRow({ task, onSelect, isSelected, onRefresh }: TaskR
             </span>
           </div>
         ) : (
-          <span className="text-xs text-asana-text-secondary opacity-0 group-hover:opacity-100 transition-opacity">
+          <span className="flex items-center gap-1 text-xs text-asana-text-secondary opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:text-asana-link">
+            <UserPlus size={12} />
             Zuweisen
           </span>
         )}
@@ -98,8 +100,9 @@ export default function TaskRow({ task, onSelect, isSelected, onRefresh }: TaskR
             {formatDueDate(task.dueDate)}
           </span>
         ) : (
-          <span className="text-xs text-asana-text-secondary opacity-0 group-hover:opacity-100 transition-opacity">
-            Datum setzen
+          <span className="flex items-center gap-1 text-xs text-asana-text-secondary opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:text-asana-link">
+            <CalendarPlus size={12} />
+            Datum
           </span>
         )}
       </td>

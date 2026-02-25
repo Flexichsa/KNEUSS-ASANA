@@ -6,6 +6,7 @@ import { formatDate } from '@/lib/utils'
 import Avatar from '@/components/ui/Avatar'
 import { Bell, CheckCheck, MessageSquare, UserPlus, Clock, Archive } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const notificationIcons: Record<string, typeof Bell> = {
   task_assigned: UserPlus,
@@ -15,6 +16,7 @@ const notificationIcons: Record<string, typeof Bell> = {
 }
 
 export default function InboxPage() {
+  const router = useRouter()
   const [notifications, setNotifications] = useState<NotificationType[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -104,7 +106,12 @@ export default function InboxPage() {
             return (
               <div
                 key={notification.id}
-                onClick={() => !notification.read && markAsRead(notification.id)}
+                onClick={() => {
+                  if (!notification.read) markAsRead(notification.id)
+                  if (notification.task?.project) {
+                    router.push(`/projects/${notification.task.project.id}/list`)
+                  }
+                }}
                 className={`flex items-start gap-3 py-3 px-3 rounded-lg cursor-pointer transition-colors ${
                   notification.read
                     ? 'hover:bg-asana-bg-secondary'

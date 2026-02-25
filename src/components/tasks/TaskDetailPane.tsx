@@ -10,7 +10,7 @@ import DatePicker from '@/components/ui/DatePicker'
 import Avatar from '@/components/ui/Avatar'
 import SubtaskList from '@/components/tasks/SubtaskList'
 import CommentSection from '@/components/tasks/CommentSection'
-import { X, Check, Link as LinkIcon, Loader2 } from 'lucide-react'
+import { X, Check, Link as LinkIcon, Loader2, Trash2 } from 'lucide-react'
 
 interface TaskDetailPaneProps {
   taskId: string
@@ -95,6 +95,19 @@ export default function TaskDetailPane({ taskId, onClose, onRefresh }: TaskDetai
     onRefresh()
   }
 
+  const handleDeleteTask = async () => {
+    if (!confirm('Aufgabe wirklich löschen?')) return
+    try {
+      const res = await fetch(`/api/tasks/${taskId}`, { method: 'DELETE' })
+      if (res.ok) {
+        onClose()
+        onRefresh()
+      }
+    } catch (error) {
+      console.error('Failed to delete task:', error)
+    }
+  }
+
   // Close on Escape
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -147,12 +160,21 @@ export default function TaskDetailPane({ taskId, onClose, onRefresh }: TaskDetai
           <Check size={14} />
           {task.completed ? 'Erledigt' : 'Als erledigt markieren'}
         </Button>
-        <button
-          onClick={onClose}
-          className="p-1.5 text-asana-text-secondary hover:text-asana-text-primary hover:bg-gray-100 rounded transition-colors"
-        >
-          <X size={18} />
-        </button>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={handleDeleteTask}
+            className="p-1.5 text-asana-text-secondary hover:text-red-600 hover:bg-red-50 rounded transition-colors"
+            title="Löschen"
+          >
+            <Trash2 size={18} />
+          </button>
+          <button
+            onClick={onClose}
+            className="p-1.5 text-asana-text-secondary hover:text-asana-text-primary hover:bg-gray-100 rounded transition-colors"
+          >
+            <X size={18} />
+          </button>
+        </div>
       </div>
 
       {/* Scrollable Content */}
@@ -194,7 +216,7 @@ export default function TaskDetailPane({ taskId, onClose, onRefresh }: TaskDetai
                     { label: 'Nicht zugewiesen', value: '' },
                     ...memberOptions,
                   ]}
-                  placeholder="Zuweisen an..."
+                  placeholder="Zuweisen..."
                   className="flex-1"
                 />
               </div>
@@ -304,6 +326,22 @@ export default function TaskDetailPane({ taskId, onClose, onRefresh }: TaskDetai
             comments={task.comments || []}
             onRefresh={handleRefresh}
           />
+
+          {/* Created date */}
+          <p className="text-xs text-asana-text-secondary mt-6">
+            Erstellt am: {new Date(task.createdAt).toLocaleDateString('de-CH')}
+          </p>
+
+          {/* Divider */}
+          <div className="border-t border-asana-border my-6" />
+
+          {/* Delete task */}
+          <button
+            onClick={handleDeleteTask}
+            className="text-sm text-red-600 hover:text-red-700 hover:underline transition-colors mb-4"
+          >
+            Aufgabe löschen
+          </button>
         </div>
       </div>
 
